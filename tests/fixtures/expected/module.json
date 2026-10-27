@@ -1,0 +1,42 @@
+{
+ "file": "module.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 1,
+   "name": "m",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 2,
+   "name": "u",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 4,
+   "name": "a",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 6,
+   "name": "assoc",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 7,
+   "name": "unit",
+   "status": "unchecked"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "assoc",
+  "refl",
+  "unit"
+ ]
+}

@@ -1,0 +1,43 @@
+# DERIVED FIXTURE (not an upstream file).
+# Upstream examples/proof_test.chyp (Chyp commit 3d28483, Apache-2.0,
+# Copyright (C) 2022 Aleks Kissinger) with two changes, because chyp-rs drops
+# those features:
+#   - the generator colours ("ffdddd", "ddffdd") are removed;
+#   - each `apply simp(ff)` is replaced by explicit `rewrite LHS` steps.
+# Expected results come from running upstream Chyp on THIS file.
+gen f : 1 -> 1
+gen g : 1 -> 1
+rule ff: f ; f = f
+rule gg: g ; g = g
+
+# rewrite-only theorem
+rewrite rwfoo: f ; f ; f
+  = f ; f by ff
+  = f by ff
+
+# theorem with apply-style proof
+theorem foo: f ; f; f ; f ; g = f ; g ; g
+proof
+  rewrite LHS
+    = f ; f ; f ; g by ff
+    = f ; f ; g by ff
+    = f ; g by ff
+  apply rule(-gg)
+qed
+
+# theorem with rewrite-style proof
+theorem bar: f ; f; f = f
+proof
+  rewrite LHS
+    = f ; f by ff
+    = RHS by ff
+qed
+
+# theorem with mixed proof
+theorem baz: f ; f ; f; f = f
+proof
+  rewrite LHS
+    = f ; f ; f by ff
+    = f ; f by ff
+  apply ff
+qed

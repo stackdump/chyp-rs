@@ -1,0 +1,14 @@
+{
+ "file": "parse_error.chyp",
+ "crash": null,
+ "parts": [],
+ "errors": [
+  {
+   "line": 8,
+   "msg": "Parse error: rule gg : g = g\n                  ^"
+  }
+ ],
+ "rules": [
+  "refl"
+ ]
+}

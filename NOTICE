@@ -1,0 +1,24 @@
+chyp-rs
+Copyright 2026 the chyp-rs contributors
+
+This product is a Rust port of part of Chyp, "an interactive theorem prover
+for string diagrams":
+
+  Chyp
+  Copyright (C) 2022-2023 Aleks Kissinger
+  https://github.com/akissinger/chyp
+  Ported from commit 3d28483 ("fixed some bugs in the docs").
+  Licensed under the Apache License, Version 2.0.
+
+Chyp's design and algorithms (cospans of hypergraphs, convex matching,
+double-pushout rewriting, the proof-checking model and the layer
+decomposition used for layout) are Aleks Kissinger's. The files under src/
+that carry a "Ported from Chyp" header are modified translations of the
+named Chyp source files; each header lists what was changed.
+
+The test fixtures in tests/fixtures/upstream/ are copied unmodified from
+Chyp's examples/ directory at the same commit. The fixtures in
+tests/fixtures/derived/ are derived from those examples, as stated at the top
+of each file.
+
+This port is licensed under the Apache License, Version 2.0 (see LICENSE).

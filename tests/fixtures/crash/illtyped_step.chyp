@@ -1,0 +1,8 @@
+# DERIVED FIXTURE: upstream Chyp (3d28483) raises RuleError while checking this
+# file, because a rewrite step's two sides have different types. chyp-rs
+# reports the error on that step, marks it invalid and keeps checking.
+gen f : 1 -> 1
+gen m : 2 -> 1
+rule ff : f ; f = f
+rewrite bad : f ; f = m by ff
+rewrite after : f ; f = f by ff

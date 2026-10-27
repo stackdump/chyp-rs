@@ -1,0 +1,267 @@
+# In this file, we'll define a non-commutative Hopf algebra and prove some
+# standard facts.
+
+
+# First, introduce generators for multiplication (m), unit (u), comultiplication (n),
+# counit (v), and antipode (s).
+gen m : 2 -> 1
+gen u : 0 -> 1
+gen n : 1 -> 2
+gen v : 1 -> 0
+gen s : 1 -> 1
+
+# (m, u) forms a monoid
+rule assoc : m * id ; m = id * m ; m
+rule unitL : u * id ; m = id
+rule unitR : id * u ; m = id
+
+# (n, v) forms a comonoid
+rule coassoc : n ; n * id = n ; id * n
+rule counitL : n ; v * id = id
+rule counitR : n ; id * v = id
+
+# the bialgebra laws
+rule bialg : m ; n = n * n ; id * sw * id ; m * m
+rule ucp : u ; n = u * u
+rule vcp : m ; v = v * v
+rule uv : u ; v = id0
+
+# the antipode laws
+rule antiL : n ; s * id ; m = v ; u
+rule antiR : n ; id * s ; m = v ; u
+
+# First, we can show that the product of the hopf algebra with itself is also a Hopf algebra
+# Here are the generators: 
+def m2 = id * sw * id ; m * m
+def u2 = u * u
+def n2 = n * n ; id * sw * id
+def v2 = v * v
+def s2 = s * s
+
+# Then proofs of the monoid laws:
+rewrite assoc2 :
+  m2 * id * id ; m2
+  = m2 * id * id ; id * sw * id ; m * m by m2_def
+  = id * sw[1, 3, 0, 2] * id ; m * id * m * id ; m * m by m2_def
+  = id * sw[1, 3, 0, 2] * id ; m * id * id * m ; m * m by assoc
+  = id * sw[1, 3, 0, 2] * id ; id * m * id * m ; m * m by assoc
+  = id * id * m2 ; id * sw * id ; m * m by -m2_def
+  = id * id * m2 ; m2 by -m2_def
+
+rewrite unitL2 :
+  u2 * id * id ; m2
+  = u2 * id * id ; id * sw * id ; m * m by m2_def
+  = u * id * u * id ; m * m by u2_def
+  = u * id * id ; m * id by unitL
+  = id * id by unitL
+
+rewrite unitR2 :
+  id * id * u2 ; m2
+  = id * u2 * id ; id * id * sw ; m * m by m2_def
+  = id * u * u * id ; id * id * sw ; m * m by u2_def
+  = id * u * id ; m * id by unitR
+  = id * id by unitR
+
+
+# Next come proofs of the comonoid laws:
+rewrite coassoc2 :
+  n2 ; n2 * id * id
+  = n2 ; n * n * id * id ; id * sw * id * id * id by n2_def
+  = n * n ; n * id * n * id ; id * sw[2, 0, 3, 1] * id by n2_def
+  = n * n ; n * id * id * n ; id * sw[2, 0, 3, 1] * id by coassoc
+  = n * n ; id * n * id * n ; id * sw[2, 0, 3, 1] * id by coassoc
+  = n * n ; id * id * sw ; id * n2 * id ; id * sw[4, 0, 1, 2, 3] by -n2_def
+  = n2 ; id * id * n2 by -n2_def
+
+rewrite counitL2 :
+  n2 ; v * v * id * id
+  = n * n ; v * id * v * id by n2_def
+  = n * id ; v * id * id by counitL
+  = id * id by counitL
+
+rewrite counitR2 :
+  n2 ; id * id * v * v
+  = n * n ; id * v * id * v by n2_def
+  = n * id ; id * v * id by counitR
+  = id * id by counitR
+
+# then the Hopf algebra laws
+rewrite bialg2 :
+  m2 ; n2
+  = id * sw * id ; m * m ; n2 by m2_def
+  = id * sw * id ; m * m ; n * n ; id * sw * id by n2_def
+  = id * sw * id ; m * n * n ; id * id * sw * id ; n * m * m ; id * sw * id by bialg
+  = n * n * n * n ; id * sw[3, 1, 5, 0, 4, 2] * id ; m * m * m * m by bialg
+  = n * n * n * n ; id * sw[3, 1, 5, 0, 2, 4] * id ; m * m * m2 by -m2_def
+  = n * n * n * n ; id * sw[1, 3, 5, 0, 2, 4] * id ; m2 * m2 by -m2_def
+  = n * n * n2 ; id * sw[1, 3, 4, 0, 2] * id * id ; m2 * m2 by -n2_def
+  = n2 * n2 ; id * id * sw[2, 3, 0, 1] * id * id ; m2 * m2 by -n2_def
+
+rewrite ucp2 :
+  u2 ; n2
+  = u * u ; n2 by u2_def
+  = u * u ; n * n ; id * sw * id by n2_def
+  = u * u * u ; n * id * id ; id * sw * id by ucp
+  = u * u * u * u by ucp
+  = u * u * u2 by -u2_def
+  = u2 * u2 by -u2_def
+
+rewrite vcp2 :
+  m2 ; v2
+  = m2 ; v * v by v2_def
+  = id * sw * id ; m * m ; v * v by m2_def
+  = id * sw * id ; m * v * v ; v by vcp
+  = v * v * v * v by vcp
+  = v2 * v * v by -v2_def
+  = v2 * v2 by -v2_def
+
+rewrite uv2 :
+  u2 ; v2
+  = u * u ; v2 by u2_def
+  = u * u ; v * v by v2_def
+  = u ; v by uv
+  = id0 by uv
+
+rewrite antiL2 :
+  n2 ; s2 * id * id ; m2
+  = n * n ; id * sw * id ; s2 * id * id ; m2 by n2_def
+  = n * n ; id * sw * id ; s2 * id * id ; id * sw * id ; m * m by m2_def
+  = n * n ; s * id * s * id ; m * m by s2_def
+  = n * v * u ; s * id * id ; m * id by antiL
+  = v * u * v * u by antiL
+  = u * v2 * u by -v2_def
+  = v2 ; u2 by -u2_def
+
+rewrite antiR2 :
+  n2 ; id * id * s2 ; m2
+  = n * n ; id * sw * id ; id * id * s2 ; m2 by n2_def
+  = n * n ; id * id * sw ; id * s2 * id ; id * id * sw ; m * m by m2_def
+  = n * n ; id * s * id * s ; m * m by s2_def
+  = n * v * u ; id * s * id ; m * id by antiR
+  = v * u * v * u by antiR
+  = u * v2 * u by -v2_def
+  = v2 * u2 by -u2_def
+
+# we can also define multiplicity-3 versions. we'll just do the monoid structure:
+def m3 = sw[0, 3, 1, 4, 2, 5] ; m * m * m
+def u3 = u * u * u
+
+# at this point, it becomes combinatorically challenging to "fold" definition of m3 correctly, so
+# we'll normalise the LHS and RHS with respect to the rules 'm3_def' and 'assoc'. In the future, there
+# could be a tactic for this, but for now, we need to do it by hand:
+rewrite assoc3_lhs :
+  m3 * id * id * id ; m3
+  = m3 * id * id * id ; id * sw[2, 0, 3, 1] * id ; m * m * m by m3_def
+  = id * sw[2, 0, 3, 5, 1, 4] * id * id ; m * m * id * m * id * id ; id * sw * sw * id ; m * m * m by m3_def
+  = id * sw[2, 0, 3, 5, 1, 6, 4] * id ; m * m * id * id * id * m ; id * sw * sw * id ; m * m * m by assoc
+  = id * sw[2, 0, 5, 1, 3, 6, 4] * id ; m * id * id * id * m * m ; id * sw * sw * id ; m * m * m by assoc
+  = id * id * sw[1, 4, 0, 2, 5, 3] * id ; id * id * m * id * m * m ; id * sw * sw * id ; m * m * m by assoc
+
+rewrite assoc3_rhs :
+  id * id * id * m3 ; m3
+  = id * id * id * id * sw[2, 0, 3, 1] * id ; id * id * id * m * m * m ; m3 by m3_def
+  = id * id * sw[1, 4, 0, 2, 5, 3] * id ; id * id * m * id * m * m ; id * sw * sw * id ; m * m * m by m3_def
+
+# since the normal forms are equal, we can complete the proof as follows:
+rewrite assoc3 :
+  m3 * id * id * id ; m3
+  = id * id * sw[1, 4, 0, 2, 5, 3] * id ; id * id * m * id * m * m ; id * sw * sw * id ; m * m * m by assoc3_lhs
+  = id * id * id * m3 ; m3 by -assoc3_rhs
+
+rewrite unitL3 :
+  u3 * id * id * id ; m3
+  = u * u * u * id * id * id ; m3 by u3_def
+  = u * id * u * u * id * id ; id * id * id * sw * id ; m * m * m by m3_def
+  = u * id * u * id * id ; m * m * id by unitL
+  = u * id * id * id ; m * id * id by unitL
+  = id * id * id by unitL
+
+rewrite unitR3 :
+  id * id * id * u3 ; m3
+  = id * id * id * u * u * u ; m3 by u3_def
+  = id * u * u * id * u * id ; id * id * sw * sw ; m * m * m by m3_def
+  = id * u * id * u * id ; m * m * id by unitR
+  = id * u * id * id ; m * id * id by unitR
+  = id * id * id by unitR
+
+# Now, we'll show some properties of Hopf algebras
+
+
+#########################
+# The antipode is unique
+#########################
+
+gen sp : 1 -> 1
+rule antiLp : n ; sp * id ; m = v ; u
+rule antiRp : n ; id * sp ; m = v ; u
+
+rewrite sp_is_s :
+  sp
+  = sp * u ; m by -unitR
+  = n ; id * v ; sp * u ; m by -counitR
+  = n ; sp * n ; id * id * s ; id * m ; m by -antiR
+  = n ; n * s ; sp * m ; m by -coassoc
+  = n ; n * s ; sp * id * id ; m * id ; m by -assoc
+  = n * u ; v * s * id ; sw ; m by antiLp
+  = u * s ; m by counitL
+  = s by unitL
+
+
+#######################################
+# The antipode is an anti-homomorphism
+#######################################
+
+# for convenience, we'll make definitions for the LHS and RHS of the anti-HM rule
+def a1 = m ; s
+def a2 = sw ; s * s ; m
+
+# show a1 is a left inverse of "m" w.r.t. convolution
+rewrite anti_hm_lem1 :
+  n2 ; a1 * m ; m
+  = n2; (m ; s) * m ; m by a1_def
+  = n * n ; id * sw * id ; m * m ; s * id ; m by n2_def
+  = m ; n ; s * id ; m by -bialg
+  = u * m ; id * v by antiL
+  = u * v * v by vcp
+
+
+# show a2 is a right inverse of "m" w.r.t. convolution
+rewrite anti_hm_lem2 :
+  n2 ; m * a2 ; m
+  = n2; m * (sw ; s * s ; m) ; m by a2_def
+  = n * n ; id * sw * id ; m * s * s ; id * sw ; id * m ; m by n2_def
+  = n * n ; id * s * id * s ; id * sw[1, 2, 0] ; id * id * m ; id * m ; m by assoc
+  = n * n ; id * s * id * s ; id * id * m ; id * sw ; id * m ; m by -assoc
+  = n * u * v ; id * s * id ; id * sw ; id * m ; m by antiR
+  = n * v ; id * s ; m by unitL
+  = u * v * v by antiR
+
+
+# ...hence a1 = a2
+rewrite s_anti_hm :
+  m ; s
+  = a1 by -a1_def
+  = u * a1 ; sw ; m by -unitR
+  = u * n2 ; id * a1 * v * v ; sw ; m by -counitR2
+  = n2 ; id * id * n2 ; a1 * m * a2 ; id * m ; m by -anti_hm_lem2
+  = n2 ; n2 * id * id ; a1 * m * a2 ; id * m ; m by -coassoc2
+  = n2 ; n2 * id * id ; a1 * m * a2 ; m * id ; m by -assoc
+  = u * n2 ; id * v * v * a2 ; m by anti_hm_lem1
+  = n2 ; v * v * a2 by unitL
+  = a2 by counitL2
+  = s * s ; sw ; m by a2_def
+
+
+# This implies that the antipode squared is a homomorphism:
+def ss = s ; s
+
+rewrite s2_hm :
+  m ; ss
+  = m ; s ; s by ss_def
+  = s * s ; sw ; m ; s by s_anti_hm
+  = s * s ; s * s ; m by s_anti_hm
+  = s * ss ; s * id ; m by -ss_def
+  = ss * ss ; m by -ss_def
+
+
+

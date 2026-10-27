@@ -1,0 +1,67 @@
+{
+ "file": "theorem_as_rule.chyp",
+ "crash": "KeyError: 't1'",
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 4,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 5,
+   "name": "ff",
+   "status": "unchecked"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 6,
+   "name": "t1",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 7,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 9,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 10,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 11,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 12,
+   "name": "use_thm",
+   "status": "checking"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 13,
+   "name": "after",
+   "status": "unchecked"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "after",
+  "ff",
+  "refl",
+  "use_thm"
+ ]
+}

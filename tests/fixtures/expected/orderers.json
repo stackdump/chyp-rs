@@ -1,0 +1,144 @@
+{
+ "file": "orderers.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 10,
+   "name": "chain",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 11,
+   "name": "nil",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 13,
+   "name": "chain_assoc",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 14,
+   "name": "chain_unitL",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 15,
+   "name": "chain_unitR",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 18,
+   "name": "tt_best",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 19,
+   "name": "immediate_win",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 20,
+   "name": "centrality",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 21,
+   "name": "history",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 27,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 28,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 29,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 30,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 35,
+   "name": "connect4_chain",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 40,
+   "name": "nil_middle",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 42,
+   "name": "nil_padding",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 45,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 47,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 48,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 54,
+   "name": "chain_not_comm",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 58,
+   "name": "chain_not_comm_concrete",
+   "status": "invalid"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "chain4_bracketing",
+  "chain_assoc",
+  "chain_not_comm",
+  "chain_not_comm_concrete",
+  "chain_unitL",
+  "chain_unitR",
+  "connect4_chain",
+  "nil_middle",
+  "refl"
+ ]
+}

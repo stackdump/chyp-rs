@@ -1,0 +1,157 @@
+{
+ "file": "proof_test_explicit.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 8,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 9,
+   "name": "g",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 10,
+   "name": "ff",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 11,
+   "name": "gg",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 15,
+   "name": "rwfoo",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 16,
+   "name": "rwfoo",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 19,
+   "name": "foo",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 20,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 22,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 23,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 24,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 25,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 26,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 29,
+   "name": "bar",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 30,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 32,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 33,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 34,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 37,
+   "name": "baz",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 38,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 40,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 41,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 42,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 43,
+   "name": "",
+   "status": "valid"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "ff",
+  "gg",
+  "refl",
+  "rwfoo"
+ ]
+}

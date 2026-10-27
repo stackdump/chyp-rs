@@ -1,0 +1,190 @@
+{
+ "file": "smc.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 26,
+   "name": "x",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 27,
+   "name": "y",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 29,
+   "name": "a",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 30,
+   "name": "b",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 31,
+   "name": "c",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 32,
+   "name": "d",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 34,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 35,
+   "name": "g",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 43,
+   "name": "assoc_par",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 44,
+   "name": "assoc_par",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 49,
+   "name": "assoc_seq",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 50,
+   "name": "assoc_seq",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 55,
+   "name": "ident_seq",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 56,
+   "name": "ident_seq",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 61,
+   "name": "ident_par",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 62,
+   "name": "ident_par",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 66,
+   "name": "inter",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 71,
+   "name": "hex",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 75,
+   "name": "sw_sw",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 79,
+   "name": "sw_nat",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 88,
+   "name": "inter1",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 89,
+   "name": "inter1",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 94,
+   "name": "eckmann_hilton",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 95,
+   "name": "eckmann_hilton",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 96,
+   "name": "eckmann_hilton",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 101,
+   "name": "yang_baxter",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 106,
+   "name": "perm_exp",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 107,
+   "name": "perm_exp",
+   "status": "invalid"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "assoc_par",
+  "assoc_seq",
+  "eckmann_hilton",
+  "hex",
+  "ident_par",
+  "ident_seq",
+  "inter",
+  "inter1",
+  "perm_exp",
+  "refl",
+  "sw_nat",
+  "sw_sw",
+  "yang_baxter"
+ ]
+}

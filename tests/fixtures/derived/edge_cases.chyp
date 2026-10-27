@@ -1,0 +1,104 @@
+# DERIVED FIXTURE (not an upstream file): error paths and checker quirks of
+# upstream Chyp (commit 3d28483) that do not crash it. Expected results come
+# from running upstream Chyp on this file (tools/upstream_expected.py).
+
+gen f : 1 -> 1
+gen g : 1 -> 1
+gen m : 2 -> 1
+gen u : 0 -> 1
+rule ff : f ; f = f
+rule unitL : u * id ; m = id
+
+# A step with no `by` uses the `refl` tactic, which upstream rejects even
+# when both sides are isomorphic. `by refl` (the built-in empty rule) works.
+rewrite bare_refl : f * id ; id * g = id * g ; f * id
+rewrite by_refl : f * id ; id * g = id * g ; f * id by refl
+rewrite not_iso : f * id = id * f by refl
+
+# Unknown and not-yet-defined rules, and a rewrite citing itself.
+rewrite unknown_rule : f ; f = f by nosuch
+rewrite too_early : g = g by later
+rewrite self_ref : f ; f ; f = f ; f by self_ref
+rule later : g ; g = g
+
+# Redefinitions.
+rule ff : f = f
+gen f : 1 -> 1
+gen g : 2 -> 2
+let h = f ; g
+let h = f
+def q = f ; f
+def q = f
+
+# A def for an existing generator of the same type adds only the rule.
+gen p : 1 -> 1
+def p = f ; f ; f
+rewrite use_p_def : p = f ; f ; f by p_def
+
+# Ill-formed terms: undefined names and a composition type error.
+let bad_ref = f ; zz
+let bad_comp = f ; m
+rewrite undefined_mid : f ; f
+  = f ; zz by ff
+  = f by ff
+
+# A rule whose sides have different types is refused at parse time.
+rule mismatched : f = m
+
+# show
+show ff
+show nosuch_rule
+
+# A theorem with no proof is never checked.
+theorem no_proof : f ; f = f
+
+# Proof steps after the goal is closed, RHS rewriting, apply forms and an
+# unknown tactic.
+theorem after_close : f ; f ; f = f
+proof
+  rewrite LHS
+    = f ; f by ff
+    = RHS by ff
+  rewrite LHS
+    = f by ff
+qed
+
+theorem rhs_side : f = f ; f ; f
+proof
+  rewrite RHS
+    = f ; f by ff
+    = LHS by ff
+qed
+
+theorem apply_forms : u * f ; m = f ; f
+proof
+  apply foo(bar)
+  rewrite LHS
+    = f by unitL
+  apply -ff
+qed
+
+theorem apply_plain : f ; f = f
+proof
+  apply ff
+qed
+
+theorem apply_refl : f * id ; id * g = id * g ; f * id
+proof
+  apply refl
+qed
+
+theorem wrong_step : f ; f = f
+proof
+  rewrite LHS
+    = f ; f ; f by ff
+qed
+
+# Matching with scalars and the empty diagram.
+gen x : 0 -> 0
+gen y : 0 -> 0
+rule xy : x * y = y
+rewrite scalars : x * x * y * f = x * y * f by xy
+rewrite scalars_none : y * f = f by xy
+rewrite empty_side : id0 = id0 by refl
+rewrite to_empty : x * y = y by xy

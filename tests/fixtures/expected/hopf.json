@@ -1,0 +1,944 @@
+{
+ "file": "hopf.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 7,
+   "name": "m",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 8,
+   "name": "u",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 9,
+   "name": "n",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 10,
+   "name": "v",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 11,
+   "name": "s",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 14,
+   "name": "assoc",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 15,
+   "name": "unitL",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 16,
+   "name": "unitR",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 19,
+   "name": "coassoc",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 20,
+   "name": "counitL",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 21,
+   "name": "counitR",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 24,
+   "name": "bialg",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 25,
+   "name": "ucp",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 26,
+   "name": "vcp",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 27,
+   "name": "uv",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 30,
+   "name": "antiL",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 31,
+   "name": "antiR",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 35,
+   "name": "m2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 36,
+   "name": "u2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 37,
+   "name": "n2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 38,
+   "name": "v2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 39,
+   "name": "s2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 44,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 45,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 46,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 47,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 48,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 49,
+   "name": "assoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 53,
+   "name": "unitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 54,
+   "name": "unitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 55,
+   "name": "unitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 56,
+   "name": "unitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 60,
+   "name": "unitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 61,
+   "name": "unitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 62,
+   "name": "unitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 63,
+   "name": "unitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 69,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 70,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 71,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 72,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 73,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 74,
+   "name": "coassoc2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 78,
+   "name": "counitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 79,
+   "name": "counitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 80,
+   "name": "counitL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 84,
+   "name": "counitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 85,
+   "name": "counitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 86,
+   "name": "counitR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 91,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 92,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 93,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 94,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 95,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 96,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 97,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 98,
+   "name": "bialg2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 102,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 103,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 104,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 105,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 106,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 107,
+   "name": "ucp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 111,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 112,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 113,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 114,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 115,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 116,
+   "name": "vcp2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 120,
+   "name": "uv2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 121,
+   "name": "uv2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 122,
+   "name": "uv2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 123,
+   "name": "uv2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 127,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 128,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 129,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 130,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 131,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 132,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 133,
+   "name": "antiL2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 137,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 138,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 139,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 140,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 141,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 142,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 143,
+   "name": "antiR2",
+   "status": "valid"
+  },
+  {
+   "kind": "RulePart",
+   "line": 146,
+   "name": "m3_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 147,
+   "name": "u3_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 154,
+   "name": "assoc3_lhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 155,
+   "name": "assoc3_lhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 156,
+   "name": "assoc3_lhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 157,
+   "name": "assoc3_lhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 158,
+   "name": "assoc3_lhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 162,
+   "name": "assoc3_rhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 163,
+   "name": "assoc3_rhs",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 168,
+   "name": "assoc3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 169,
+   "name": "assoc3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 173,
+   "name": "unitL3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 174,
+   "name": "unitL3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 175,
+   "name": "unitL3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 176,
+   "name": "unitL3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 177,
+   "name": "unitL3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 181,
+   "name": "unitR3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 182,
+   "name": "unitR3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 183,
+   "name": "unitR3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 184,
+   "name": "unitR3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 185,
+   "name": "unitR3",
+   "status": "valid"
+  },
+  {
+   "kind": "GenPart",
+   "line": 194,
+   "name": "sp",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 195,
+   "name": "antiLp",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 196,
+   "name": "antiRp",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 200,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 201,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 202,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 203,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 204,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 205,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 206,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 207,
+   "name": "sp_is_s",
+   "status": "valid"
+  },
+  {
+   "kind": "RulePart",
+   "line": 215,
+   "name": "a1_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 216,
+   "name": "a2_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 221,
+   "name": "anti_hm_lem1",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 222,
+   "name": "anti_hm_lem1",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 223,
+   "name": "anti_hm_lem1",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 224,
+   "name": "anti_hm_lem1",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 225,
+   "name": "anti_hm_lem1",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 231,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 232,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 233,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 234,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 235,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 236,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 237,
+   "name": "anti_hm_lem2",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 243,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 244,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 245,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 246,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 247,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 248,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 249,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 250,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 251,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 252,
+   "name": "s_anti_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RulePart",
+   "line": 256,
+   "name": "ss_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 260,
+   "name": "s2_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 261,
+   "name": "s2_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 262,
+   "name": "s2_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 263,
+   "name": "s2_hm",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 264,
+   "name": "s2_hm",
+   "status": "valid"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "a1_def",
+  "a2_def",
+  "antiL",
+  "antiL2",
+  "antiLp",
+  "antiR",
+  "antiR2",
+  "antiRp",
+  "anti_hm_lem1",
+  "anti_hm_lem2",
+  "assoc",
+  "assoc2",
+  "assoc3",
+  "assoc3_lhs",
+  "assoc3_rhs",
+  "bialg",
+  "bialg2",
+  "coassoc",
+  "coassoc2",
+  "counitL",
+  "counitL2",
+  "counitR",
+  "counitR2",
+  "m2_def",
+  "m3_def",
+  "n2_def",
+  "refl",
+  "s2_def",
+  "s2_hm",
+  "s_anti_hm",
+  "sp_is_s",
+  "ss_def",
+  "u2_def",
+  "u3_def",
+  "ucp",
+  "ucp2",
+  "unitL",
+  "unitL2",
+  "unitL3",
+  "unitR",
+  "unitR2",
+  "unitR3",
+  "uv",
+  "uv2",
+  "v2_def",
+  "vcp",
+  "vcp2"
+ ]
+}

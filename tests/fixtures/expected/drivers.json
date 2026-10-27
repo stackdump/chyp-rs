@@ -1,0 +1,177 @@
+{
+ "file": "drivers.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 14,
+   "name": "chain",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 15,
+   "name": "nil",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 16,
+   "name": "chain_assoc",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 17,
+   "name": "chain_unitR",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 19,
+   "name": "core",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 20,
+   "name": "null_window",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 21,
+   "name": "budget",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 22,
+   "name": "plain",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 25,
+   "name": "plain_id",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 28,
+   "name": "budget_idem",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 31,
+   "name": "solver_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 36,
+   "name": "solver_unfold",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 41,
+   "name": "plain_dropped",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 42,
+   "name": "plain_dropped",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 43,
+   "name": "plain_dropped",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 46,
+   "name": "budget_rewrap",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 48,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 50,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 51,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 52,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 53,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 59,
+   "name": "wrapped_chain_regroup",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 60,
+   "name": "wrapped_chain_regroup",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 64,
+   "name": "wrapped_nil",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 70,
+   "name": "drivers_dont_commute",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 74,
+   "name": "drivers_dont_commute_plain",
+   "status": "invalid"
+  }
+ ],
+ "errors": [],
+ "rules": [
+  "budget_idem",
+  "chain_assoc",
+  "chain_unitR",
+  "drivers_dont_commute",
+  "drivers_dont_commute_plain",
+  "plain_dropped",
+  "plain_id",
+  "refl",
+  "solver_def",
+  "solver_unfold",
+  "wrapped_chain_regroup",
+  "wrapped_nil"
+ ]
+}

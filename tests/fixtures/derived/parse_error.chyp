@@ -1,0 +1,8 @@
+# DERIVED FIXTURE: a syntax error. Upstream reports one parse error and no
+# parts at all; so does chyp-rs (the message text differs, the line does not).
+gen f : 1 -> 1
+rule ff : f ; f = f
+rewrite r : f ; f
+  = f by ff
+gen g : 1 ->
+rule gg : g = g

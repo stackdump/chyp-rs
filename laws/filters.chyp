@@ -1,0 +1,65 @@
+# Sound filters form a meet-semilattice under intersection.
+#
+# Source: ontology-pflow-xyz ROADMAP.md, Phase 6 "Search composition":
+#   "Sound filters: a meet-semilattice under intersection."
+#
+# A wire carries a set of moves. `meet` intersects two sets, `all` is the set
+# of all moves (the unit of intersection), and `dup` copies a set, which is
+# what idempotence needs to be stated as a string diagram.
+
+gen meet : 2 -> 1
+gen all : 0 -> 1
+gen dup : 1 -> 2
+
+rule meet_assoc : meet * id ; meet = id * meet ; meet
+rule meet_unitL : all * id ; meet = id
+rule meet_comm : sw ; meet = meet
+rule meet_idem : dup ; meet = id
+
+# Two concrete sound filters. Filters are plain data, so they can be copied.
+gen legal : 0 -> 1
+gen threat : 0 -> 1
+rule legal_copy : legal ; dup = legal * legal
+
+# The right unit law follows from the left one and commutativity.
+rewrite meet_unitR :
+  id * all ; meet
+  = all * id ; meet by -meet_comm
+  = id by meet_unitL
+
+# Intersection of two concrete filters does not depend on their order.
+rewrite meet_comm_concrete :
+  legal * threat ; meet
+  = threat * legal ; meet by -meet_comm
+
+# Idempotence: intersecting a filter with itself changes nothing.
+theorem legal_idem :
+  legal * legal ; meet = legal
+proof
+  rewrite LHS
+    = legal ; dup ; meet by -legal_copy
+    = RHS by meet_idem
+qed
+
+# Idempotence for a three-way copy, using it twice.
+rewrite meet_idem3 :
+  dup ; dup * id ; meet * id ; meet
+  = dup ; meet by meet_idem
+  = id by meet_idem
+
+# Associativity lets a three-filter intersection be regrouped.
+rewrite meet3_regroup :
+  legal * threat * all ; meet * id ; meet
+  = legal * threat * all ; id * meet ; meet by meet_assoc
+  = legal * threat ; meet by meet_unitR
+
+# Without commutativity the left unit rule does not apply on the right:
+# meet_unitL's LHS feeds `all` into the FIRST input of meet. Rejected.
+rewrite unitR_needs_comm :
+  id * all ; meet
+  = id by meet_unitL
+
+# Intersection is not absorbing: `all` does not swallow a filter. Rejected.
+rewrite meet_not_absorbing :
+  legal * all ; meet
+  = all by meet_unitL

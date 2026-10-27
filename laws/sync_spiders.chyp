@@ -1,0 +1,91 @@
+# Spider fusion for sync points.
+#
+# Source: ontology-pflow-xyz ROADMAP.md, Phase 6 "Model composition":
+#   "lk:event: transition fusion. Draw it as a synchronising spider joining
+#    two boxes, not as a wire."
+#
+# A sync point is a spider on the event wire: a special commutative Frobenius
+# algebra. `join` merges two event wires, `fork` splits one, `start`/`stop`
+# are the zero-legged ends. Spider fusion (two connected sync points are one
+# sync point) follows from the Frobenius, special and (co)commutative laws.
+
+gen join : 2 -> 1
+gen start : 0 -> 1
+gen fork : 1 -> 2
+gen stop : 1 -> 0
+
+rule assoc : join * id ; join = id * join ; join
+rule unitL : start * id ; join = id
+rule unitR : id * start ; join = id
+rule coassoc : fork ; fork * id = fork ; id * fork
+rule counitL : fork ; stop * id = id
+rule counitR : fork ; id * stop = id
+rule frob : fork * id ; id * join = id * fork ; join * id
+rule comm : sw ; join = join
+rule cocomm : fork ; sw = fork
+rule spec : fork ; join = id
+
+# Two transitions of the orders/workers/refund composition, each with one
+# event port, so a sync spider can fuse them.
+gen dequeue : 1 -> 1
+gen acquire : 1 -> 1
+
+# A 2-in, 2-out sync point.
+def sync22 = join ; fork
+
+# Fusion along ONE shared wire: a fork feeding a join is one sync point.
+rewrite fuse_one_wire :
+  fork * id ; id * join
+  = start * fork * id ; join * join by -unitL
+  = start * id * id ; fork * id * id ; id * join * id ; id * join by -frob
+  = start * join ; fork * id ; id * join by assoc
+  = start * join ; id * fork ; join * id by frob
+  = join ; fork by unitL
+
+# ...and the mirror image.
+rewrite fuse_one_wire_mirror :
+  id * fork ; join * id
+  = fork * id ; id * join by -frob
+  = join ; fork by fuse_one_wire
+
+# Fusion along TWO shared wires: two 2-2 sync points in a row are one.
+rewrite fuse_two_wires :
+  sync22 ; sync22
+  = join ; fork ; sync22 by sync22_def
+  = join ; fork ; join ; fork by sync22_def
+  = join ; fork by spec
+  = sync22 by -sync22_def
+
+# Spider legs are unordered: permuting inputs or outputs of a sync point
+# leaves it unchanged.
+rewrite sync_legs_unordered :
+  sw ; join ; fork ; sw
+  = join ; fork ; sw by comm
+  = join ; fork by cocomm
+
+# Fusing the event ports of two transitions (queue.dequeue x pool.acquire),
+# then fusing that sync point with a third consumer, is one 3-legged sync:
+# the grouping of the fusions does not matter.
+theorem fuse_three :
+  dequeue * acquire * id ; join * id ; join
+  = dequeue * acquire * id ; id * join ; join
+proof
+  rewrite LHS
+    = RHS by assoc
+qed
+
+# A sync point that is created and immediately discarded is no sync at all.
+rewrite sync_loop_vanishes :
+  fork ; join
+  = id by spec
+
+# Fusion does NOT pass through an ordinary transition: a sync point on
+# either side of `dequeue` is not one sync point. Rejected.
+rewrite no_fusion_through_box :
+  join ; dequeue ; fork
+  = join ; fork by spec
+
+# Nor do two transitions fuse into one: rejected.
+rewrite boxes_dont_fuse :
+  dequeue ; acquire
+  = acquire by unitL

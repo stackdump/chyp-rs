@@ -1,0 +1,58 @@
+# Orderers form a monoid under chaining.
+#
+# Source: ontology-pflow-xyz ROADMAP.md, Phase 6 "Search composition":
+#   "Orderers: a monoid under chaining (the empty chain [] is the identity,
+#    concatenation is associative, and the composite is lexicographic)."
+#
+# A wire carries one move orderer. `chain` composes two orderers
+# lexicographically (left one first); `nil` is the empty chain [].
+
+gen chain : 2 -> 1
+gen nil : 0 -> 1
+
+rule chain_assoc : chain * id ; chain = id * chain ; chain
+rule chain_unitL : nil * id ; chain = id
+rule chain_unitR : id * nil ; chain = id
+
+# The four orderers of plan:connect4-exact, in plan order.
+gen tt_best : 0 -> 1
+gen immediate_win : 0 -> 1
+gen centrality : 0 -> 1
+gen history : 0 -> 1
+
+# Any two bracketings of a four-piece chain are equal: walk round the
+# pentagon from ((ab)(cd)) to (((ab)c)d) through all five bracketings.
+rewrite chain4_bracketing :
+  chain * chain ; chain
+  = id * id * chain ; id * chain ; chain by chain_assoc
+  = id * chain * id ; id * chain ; chain by -chain_assoc
+  = id * chain * id ; chain * id ; chain by -chain_assoc
+  = chain * id * id ; chain * id ; chain by -chain_assoc
+
+# ...so the connect4 plan's order chain has one meaning however it is grouped.
+rewrite connect4_chain :
+  tt_best * immediate_win * centrality * history ; chain * chain ; chain
+  = tt_best * immediate_win * centrality * history ; chain * id * id ; chain * id ; chain by chain4_bracketing
+
+# The empty chain can be dropped anywhere in a chain.
+rewrite nil_middle :
+  id * nil * id ; chain * id ; chain
+  = chain by chain_unitR
+
+theorem nil_padding :
+  tt_best * nil * immediate_win ; chain * id ; chain
+  = tt_best * immediate_win ; chain
+proof
+  rewrite LHS
+    = tt_best * immediate_win ; chain by chain_unitR
+qed
+
+# Chaining is lexicographic, hence NOT commutative: no rule turns
+# `sw ; chain` into `chain`. Both steps below must be rejected.
+rewrite chain_not_comm :
+  sw ; chain
+  = chain by chain_assoc
+
+rewrite chain_not_comm_concrete :
+  tt_best * history ; chain
+  = history * tt_best ; chain by chain_unitL

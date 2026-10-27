@@ -1,0 +1,47 @@
+{
+ "file": "illtyped_step.chyp",
+ "crash": "RuleError: Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])",
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 4,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 5,
+   "name": "m",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 6,
+   "name": "ff",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 7,
+   "name": "bad",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 8,
+   "name": "after",
+   "status": "unchecked"
+  }
+ ],
+ "errors": [
+  {
+   "line": 7,
+   "msg": "Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])"
+  }
+ ],
+ "rules": [
+  "after",
+  "ff",
+  "refl"
+ ]
+}
