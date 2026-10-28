@@ -1,0 +1,47 @@
+{
+ "file": "line_endings_mixed.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 3,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 5,
+   "name": "x",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 7,
+   "name": "y",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 8,
+   "name": "z",
+   "status": "unchecked"
+  }
+ ],
+ "errors": [
+  {
+   "line": 5,
+   "msg": "Undefined term: nope"
+  },
+  {
+   "line": 7,
+   "msg": "Undefined term: nope2"
+  },
+  {
+   "line": 8,
+   "msg": "Undefined term: nope3"
+  }
+ ],
+ "rules": [
+  "refl"
+ ]
+}

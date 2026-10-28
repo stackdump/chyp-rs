@@ -3,8 +3,7 @@ name = "chyp-rs"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-description = "A Rust port of the core of Chyp (string-diagram rewriting and proof checking) for native and wasm32"
-repository = "https://github.com/akissinger/chyp"
+description = "An unofficial Rust port of part of Chyp (https://github.com/akissinger/chyp, commit 3d28483): string-diagram rewriting and proof checking for native and wasm32"
 publish = false
 
 [lib]

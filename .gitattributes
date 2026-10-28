@@ -1,0 +1,2 @@
+# These fixtures test line endings; never convert them.
+tests/fixtures/original/line_endings_*.chyp -text

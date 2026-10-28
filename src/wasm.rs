@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs (not derived from a Chyp source file).
+
 //! The wasm32 API (wasm-bindgen). Every result is a JSON string; see json.rs
 //! for the shapes.
 //!
@@ -31,13 +34,18 @@ impl Session {
     /// Load (parse) a theory. Nothing is checked yet.
     #[wasm_bindgen(constructor)]
     pub fn new(source: &str) -> Session {
-        Session { source: source.to_string(), state: State::parse(source), checker: Checker::new() }
+        Session {
+            source: source.to_string(),
+            state: State::parse(source),
+            checker: Checker::new(),
+        }
     }
 
     /// Replace the theory with `source` and start checking from the top.
     /// Returns the outline.
     pub fn load(&mut self, source: &str) -> String {
-        *self = Session::new(source);
+        let fresh = Session::new(source);
+        *self = fresh;
         self.outline()
     }
 
@@ -86,7 +94,12 @@ impl Session {
     /// Errors so far, as a JSON list of {line, msg}.
     pub fn errors(&self) -> String {
         serde_json::to_string(
-            &self.state.errors.iter().map(|e| serde_json::json!({"line": e.line, "msg": e.msg})).collect::<Vec<_>>(),
+            &self
+                .state
+                .errors
+                .iter()
+                .map(|e| serde_json::json!({"line": e.line, "msg": e.msg}))
+                .collect::<Vec<_>>(),
         )
         .unwrap()
     }

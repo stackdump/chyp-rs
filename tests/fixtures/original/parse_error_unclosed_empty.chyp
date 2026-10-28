@@ -1,0 +1,8 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# an empty tactic argument list still open at the end of the file.
+# Upstream reports the line of the '('.
+gen f : 1 -> 1
+rewrite r : f ; f
+  = f by rule(
+
+

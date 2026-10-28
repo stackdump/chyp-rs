@@ -4,87 +4,69 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 14,
+   "line": 17,
    "name": "m",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 15,
+   "line": 18,
    "name": "u",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 16,
+   "line": 19,
    "name": "n",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 17,
+   "line": 20,
    "name": "v",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 20,
+   "line": 23,
    "name": "assoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 21,
+   "line": 24,
    "name": "unitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 22,
+   "line": 25,
    "name": "unitR",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 25,
+   "line": 28,
    "name": "coassoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 26,
+   "line": 29,
    "name": "counitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 27,
+   "line": 30,
    "name": "counitR",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 30,
+   "line": 33,
    "name": "frob",
    "status": "unchecked"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 44,
-   "name": "frobL",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 45,
-   "name": "frobL",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 46,
-   "name": "frobL",
-   "status": "valid"
   },
   {
    "kind": "RewritePart",
@@ -99,105 +81,105 @@
    "status": "valid"
   },
   {
-   "kind": "RulePart",
+   "kind": "RewritePart",
+   "line": 49,
+   "name": "frobL",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
    "line": 50,
+   "name": "frobL",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 51,
+   "name": "frobL",
+   "status": "valid"
+  },
+  {
+   "kind": "RulePart",
+   "line": 53,
    "name": "frobL",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 55,
+   "line": 58,
    "name": "frobR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 56,
+   "line": 59,
    "name": "frobR",
    "status": "valid"
   },
   {
    "kind": "RulePart",
-   "line": 58,
+   "line": 61,
    "name": "frobR",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 63,
+   "line": 66,
    "name": "frob_again",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 64,
+   "line": 67,
    "name": "frob_again",
    "status": "valid"
   },
   {
    "kind": "RulePart",
-   "line": 68,
+   "line": 71,
    "name": "cup_def",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 69,
+   "line": 72,
    "name": "cap_def",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 74,
+   "line": 77,
    "name": "cap_assoc",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 75,
+   "line": 78,
    "name": "cap_assoc",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 76,
+   "line": 79,
    "name": "cap_assoc",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 81,
+   "line": 84,
    "name": "cup_coassoc",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 82,
+   "line": 85,
    "name": "cup_coassoc",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 83,
+   "line": 86,
    "name": "cup_coassoc",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 93,
-   "name": "yankL",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 94,
-   "name": "yankL",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 95,
-   "name": "yankL",
    "status": "valid"
   },
   {
@@ -214,20 +196,20 @@
   },
   {
    "kind": "RewritePart",
-   "line": 101,
-   "name": "yankR",
+   "line": 98,
+   "name": "yankL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 102,
-   "name": "yankR",
+   "line": 99,
+   "name": "yankL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 103,
-   "name": "yankR",
+   "line": 100,
+   "name": "yankL",
    "status": "valid"
   },
   {
@@ -244,273 +226,273 @@
   },
   {
    "kind": "RewritePart",
-   "line": 112,
+   "line": 106,
+   "name": "yankR",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 107,
+   "name": "yankR",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 108,
+   "name": "yankR",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 115,
    "name": "m_cupL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 113,
+   "line": 116,
    "name": "m_cupL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 114,
+   "line": 117,
    "name": "m_cupL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 118,
+   "line": 121,
    "name": "m_cupR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 119,
+   "line": 122,
    "name": "m_cupR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 120,
+   "line": 123,
    "name": "m_cupR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 124,
+   "line": 127,
    "name": "n_capL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 125,
+   "line": 128,
    "name": "n_capL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 126,
+   "line": 129,
    "name": "n_capL",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 130,
+   "line": 133,
    "name": "n_capR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 131,
+   "line": 134,
    "name": "n_capR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 132,
+   "line": 135,
    "name": "n_capR",
    "status": "valid"
   },
   {
    "kind": "LetPart",
-   "line": 137,
+   "line": 140,
    "name": "m2",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 138,
+   "line": 141,
    "name": "u2",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 139,
+   "line": 142,
    "name": "n2",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 140,
+   "line": 143,
    "name": "v2",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 145,
+   "line": 148,
    "name": "id2",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 153,
+   "line": 156,
    "name": "assoc2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 154,
+   "line": 157,
    "name": "assoc2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 155,
+   "line": 158,
    "name": "assoc2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 159,
+   "line": 162,
    "name": "unitL2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 160,
+   "line": 163,
    "name": "unitL2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 161,
+   "line": 164,
    "name": "unitL2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 165,
+   "line": 168,
    "name": "unitR2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 166,
+   "line": 169,
    "name": "unitR2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 167,
+   "line": 170,
    "name": "unitR2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 172,
+   "line": 175,
    "name": "coassoc2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 173,
+   "line": 176,
    "name": "coassoc2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 174,
+   "line": 177,
    "name": "coassoc2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 178,
+   "line": 181,
    "name": "counitL2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 179,
+   "line": 182,
    "name": "counitL2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 180,
+   "line": 183,
    "name": "counitL2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 184,
+   "line": 187,
    "name": "counitR2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 185,
+   "line": 188,
    "name": "counitR2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 186,
+   "line": 189,
    "name": "counitR2",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 192,
+   "line": 195,
    "name": "frob2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 193,
+   "line": 196,
    "name": "frob2",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 194,
+   "line": 197,
    "name": "frob2",
    "status": "invalid"
   },
   {
    "kind": "LetPart",
-   "line": 212,
+   "line": 215,
    "name": "kf",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 218,
+   "line": 221,
    "name": "kf_flip",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 219,
+   "line": 222,
    "name": "kf_flip",
    "status": "valid"
   },
   {
    "kind": "RulePart",
-   "line": 225,
+   "line": 228,
    "name": "ssym",
    "status": "unchecked"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 229,
-   "name": "foo",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 230,
-   "name": "foo",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 231,
-   "name": "foo",
-   "status": "valid"
   },
   {
    "kind": "RewritePart",
@@ -520,20 +502,20 @@
   },
   {
    "kind": "RewritePart",
-   "line": 238,
-   "name": "symm_cap",
+   "line": 233,
+   "name": "foo",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 239,
-   "name": "symm_cap",
+   "line": 234,
+   "name": "foo",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 240,
-   "name": "symm_cap",
+   "line": 235,
+   "name": "foo",
    "status": "valid"
   },
   {
@@ -567,45 +549,45 @@
    "status": "valid"
   },
   {
-   "kind": "RulePart",
+   "kind": "RewritePart",
+   "line": 246,
+   "name": "symm_cap",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
    "line": 247,
+   "name": "symm_cap",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 248,
+   "name": "symm_cap",
+   "status": "valid"
+  },
+  {
+   "kind": "RulePart",
+   "line": 250,
    "name": "symm_cap",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 252,
+   "line": 255,
    "name": "symm_cup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 253,
+   "line": 256,
    "name": "symm_cup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 254,
+   "line": 257,
    "name": "symm_cup",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 260,
-   "name": "spec_lem",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 261,
-   "name": "spec_lem",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 262,
-   "name": "spec_lem",
    "status": "valid"
   },
   {
@@ -616,49 +598,67 @@
   },
   {
    "kind": "RewritePart",
-   "line": 268,
+   "line": 264,
+   "name": "spec_lem",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 265,
+   "name": "spec_lem",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 266,
+   "name": "spec_lem",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 271,
    "name": "spec",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 269,
+   "line": 272,
    "name": "spec",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 270,
+   "line": 273,
    "name": "spec",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 276,
-   "name": "ssym_again",
-   "status": "invalid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 277,
-   "name": "ssym_again",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 278,
-   "name": "ssym_again",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 279,
    "name": "ssym_again",
-   "status": "valid"
+   "status": "invalid"
   },
   {
    "kind": "RewritePart",
    "line": 280,
+   "name": "ssym_again",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 281,
+   "name": "ssym_again",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 282,
+   "name": "ssym_again",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 283,
    "name": "ssym_again",
    "status": "valid"
   }

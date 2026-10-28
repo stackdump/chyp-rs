@@ -1,0 +1,14 @@
+{
+ "file": "parse_error_paren_in_arg.chyp",
+ "crash": null,
+ "parts": [],
+ "errors": [
+  {
+   "line": 8,
+   "msg": "Parse error: let x = (f)\n                     ^"
+  }
+ ],
+ "rules": [
+  "refl"
+ ]
+}

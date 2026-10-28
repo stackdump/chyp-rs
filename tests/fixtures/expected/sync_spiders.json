@@ -4,223 +4,223 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 12,
+   "line": 22,
    "name": "join",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 13,
+   "line": 23,
    "name": "start",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 14,
+   "line": 24,
    "name": "fork",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 15,
+   "line": 25,
    "name": "stop",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 17,
+   "line": 27,
    "name": "assoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 18,
+   "line": 28,
    "name": "unitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 19,
+   "line": 29,
    "name": "unitR",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 20,
+   "line": 30,
    "name": "coassoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 21,
+   "line": 31,
    "name": "counitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 22,
+   "line": 32,
    "name": "counitR",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 23,
+   "line": 33,
    "name": "frob",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 24,
+   "line": 34,
    "name": "comm",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 25,
+   "line": 35,
    "name": "cocomm",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 26,
+   "line": 36,
    "name": "spec",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 30,
+   "line": 40,
    "name": "dequeue",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 31,
+   "line": 41,
    "name": "acquire",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 34,
+   "line": 44,
    "name": "sync22_def",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 39,
-   "name": "fuse_one_wire",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 40,
-   "name": "fuse_one_wire",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 41,
-   "name": "fuse_one_wire",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 42,
-   "name": "fuse_one_wire",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 43,
-   "name": "fuse_one_wire",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 48,
-   "name": "fuse_one_wire_mirror",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
    "line": 49,
+   "name": "fuse_one_wire",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 50,
+   "name": "fuse_one_wire",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 51,
+   "name": "fuse_one_wire",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 52,
+   "name": "fuse_one_wire",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 53,
+   "name": "fuse_one_wire",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 58,
    "name": "fuse_one_wire_mirror",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 54,
-   "name": "fuse_two_wires",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 55,
-   "name": "fuse_two_wires",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 56,
-   "name": "fuse_two_wires",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 57,
-   "name": "fuse_two_wires",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 63,
-   "name": "sync_legs_unordered",
+   "line": 59,
+   "name": "fuse_one_wire_mirror",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 64,
+   "name": "fuse_two_wires",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 65,
+   "name": "fuse_two_wires",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 66,
+   "name": "fuse_two_wires",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 67,
+   "name": "fuse_two_wires",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 73,
    "name": "sync_legs_unordered",
-   "status": "valid"
-  },
-  {
-   "kind": "TheoremPart",
-   "line": 69,
-   "name": "fuse_three",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofStartPart",
-   "line": 72,
-   "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 74,
+   "name": "sync_legs_unordered",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 79,
+   "name": "fuse_three",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 82,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 84,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ProofQedPart",
-   "line": 75,
+   "line": 85,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 80,
+   "line": 90,
    "name": "sync_loop_vanishes",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 86,
+   "line": 96,
    "name": "no_fusion_through_box",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 91,
+   "line": 101,
    "name": "boxes_dont_fuse",
    "status": "invalid"
   }

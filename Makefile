@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 the chyp-rs contributors. New in chyp-rs.
 # chyp-rs: build, test, wasm bundle, and upstream expectations.
 
 WASM_TARGET := wasm32-unknown-unknown
@@ -6,7 +8,7 @@ WASM_OUT    := target/$(WASM_TARGET)/wasm/chyp.wasm
 # regenerating the expected results (`make expected`).
 CHYP        ?= ../chyp
 PYTHON      ?= python3
-FIXTURES    := $(wildcard tests/fixtures/upstream/*.chyp tests/fixtures/derived/*.chyp tests/fixtures/crash/*.chyp laws/*.chyp)
+FIXTURES    := $(wildcard tests/fixtures/upstream/*.chyp tests/fixtures/derived/*.chyp tests/fixtures/original/*.chyp tests/fixtures/crash/*.chyp laws/*.chyp)
 
 .PHONY: all build test wasm wasm-test size expected check-laws clean
 
@@ -18,10 +20,12 @@ build:
 test:
 	cargo test
 
-# The wasm bundle: pkg/chyp.js + pkg/chyp_bg.wasm (ES module, `--target web`).
+# The wasm bundle: pkg/chyp.js + pkg/chyp_bg.wasm (ES module, `--target web`),
+# with the LICENSE, NOTICE and THIRD-PARTY-NOTICES that must ship with it.
 wasm:
 	cargo build --lib --target $(WASM_TARGET) --profile wasm
 	wasm-bindgen --target web --out-dir pkg --out-name chyp $(WASM_OUT)
+	cp LICENSE NOTICE THIRD-PARTY-NOTICES pkg/
 	@$(MAKE) --no-print-directory size
 
 size:

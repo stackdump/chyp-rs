@@ -1,0 +1,14 @@
+{
+ "file": "parse_error_unclosed_args.chyp",
+ "crash": null,
+ "parts": [],
+ "errors": [
+  {
+   "line": 7,
+   "msg": "Parse error:   = f by rule(ff\n                           ^"
+  }
+ ],
+ "rules": [
+  "refl"
+ ]
+}

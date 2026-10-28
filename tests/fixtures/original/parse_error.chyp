@@ -1,4 +1,5 @@
-# DERIVED FIXTURE: a syntax error. Upstream reports one parse error and no
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# a syntax error. Upstream reports one parse error and no
 # parts at all; so does chyp-rs (the message text differs, the line does not).
 gen f : 1 -> 1
 rule ff : f ; f = f

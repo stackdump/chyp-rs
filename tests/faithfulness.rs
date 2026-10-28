@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs.
+
 //! Faithfulness against upstream Chyp (commit 3d28483).
 //!
 //! Each fixture was parsed and checked by upstream Chyp, headless, with
@@ -32,7 +35,14 @@ fn parts_of(state: &chyp::State) -> Vec<(String, i64, String, String)> {
     state
         .parts
         .iter()
-        .map(|p| (p.kind.class_name().to_string(), p.line as i64, p.name.clone(), p.status.as_str().to_string()))
+        .map(|p| {
+            (
+                p.kind.class_name().to_string(),
+                p.line as i64,
+                p.name.clone(),
+                p.status.as_str().to_string(),
+            )
+        })
         .collect()
 }
 
@@ -90,63 +100,69 @@ fn assert_faithful(rel: &str) {
 
     let mut rules: Vec<String> = state.table.rules.keys().cloned().collect();
     rules.sort();
-    let want_rules: Vec<String> =
-        exp["rules"].as_array().unwrap().iter().map(|r| r.as_str().unwrap().to_string()).collect();
+    let want_rules: Vec<String> = exp["rules"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|r| r.as_str().unwrap().to_string())
+        .collect();
     assert_eq!(rules, want_rules, "{}: rule names", rel);
 }
 
-// Upstream examples that use only the features chyp-rs keeps.
-#[test]
-fn upstream_frobenius() {
-    assert_faithful("tests/fixtures/upstream/frobenius.chyp");
-}
-#[test]
-fn upstream_hopf() {
-    assert_faithful("tests/fixtures/upstream/hopf.chyp");
-}
-#[test]
-fn upstream_smc() {
-    assert_faithful("tests/fixtures/upstream/smc.chyp");
-}
-#[test]
-fn upstream_module() {
-    assert_faithful("tests/fixtures/upstream/module.chyp");
-}
-
-// Derived fixtures, checked by upstream on the derived file itself.
-#[test]
-fn derived_ssfa_inlined() {
-    assert_faithful("tests/fixtures/derived/ssfa_inlined.chyp");
-}
-#[test]
-fn derived_proof_test_explicit() {
-    assert_faithful("tests/fixtures/derived/proof_test_explicit.chyp");
-}
-#[test]
-fn derived_edge_cases() {
-    assert_faithful("tests/fixtures/derived/edge_cases.chyp");
-}
-#[test]
-fn derived_parse_error() {
-    assert_faithful("tests/fixtures/derived/parse_error.chyp");
+/// One test per fixture, comparing chyp-rs with upstream Chyp's results.
+macro_rules! faithful {
+    ($($name:ident => $path:expr,)*) => {
+        $(
+            #[test]
+            fn $name() {
+                assert_faithful($path);
+            }
+        )*
+        /// Every fixture with upstream results has a test above.
+        #[test]
+        fn every_fixture_is_tested() {
+            let tested: Vec<&str> = vec![$($path),*];
+            for dir in ["tests/fixtures/upstream", "tests/fixtures/derived", "tests/fixtures/original", "laws"] {
+                for entry in fs::read_dir(root().join(dir)).unwrap() {
+                    let path = entry.unwrap().path();
+                    if path.extension().and_then(|e| e.to_str()) == Some("chyp") {
+                        let rel = format!("{}/{}", dir, path.file_name().unwrap().to_str().unwrap());
+                        assert!(tested.contains(&rel.as_str()), "{} has no faithfulness test", rel);
+                    }
+                }
+            }
+        }
+    };
 }
 
-// The search-composition laws, checked by upstream too.
-#[test]
-fn laws_orderers() {
-    assert_faithful("laws/orderers.chyp");
-}
-#[test]
-fn laws_filters() {
-    assert_faithful("laws/filters.chyp");
-}
-#[test]
-fn laws_drivers() {
-    assert_faithful("laws/drivers.chyp");
-}
-#[test]
-fn laws_sync_spiders() {
-    assert_faithful("laws/sync_spiders.chyp");
+faithful! {
+    // Upstream examples that use only the features chyp-rs keeps (verbatim).
+    upstream_frobenius => "tests/fixtures/upstream/frobenius.chyp",
+    upstream_hopf => "tests/fixtures/upstream/hopf.chyp",
+    upstream_smc => "tests/fixtures/upstream/smc.chyp",
+    upstream_module => "tests/fixtures/upstream/module.chyp",
+    // Derived from upstream examples that use dropped features.
+    derived_ssfa_inlined => "tests/fixtures/derived/ssfa_inlined.chyp",
+    derived_proof_test_explicit => "tests/fixtures/derived/proof_test_explicit.chyp",
+    // Original fixtures probing upstream's behaviour.
+    original_edge_cases => "tests/fixtures/original/edge_cases.chyp",
+    original_tactic_args => "tests/fixtures/original/tactic_args.chyp",
+    original_glued_keywords => "tests/fixtures/original/glued_keywords.chyp",
+    original_long_terms => "tests/fixtures/original/long_terms.chyp",
+    original_line_endings_cr => "tests/fixtures/original/line_endings_cr.chyp",
+    original_line_endings_crlf => "tests/fixtures/original/line_endings_crlf.chyp",
+    original_line_endings_mixed => "tests/fixtures/original/line_endings_mixed.chyp",
+    original_parse_error => "tests/fixtures/original/parse_error.chyp",
+    original_parse_error_comment_paren => "tests/fixtures/original/parse_error_comment_paren.chyp",
+    original_parse_error_lhs_in_rule => "tests/fixtures/original/parse_error_lhs_in_rule.chyp",
+    original_parse_error_paren_in_arg => "tests/fixtures/original/parse_error_paren_in_arg.chyp",
+    original_parse_error_unclosed_args => "tests/fixtures/original/parse_error_unclosed_args.chyp",
+    original_parse_error_unclosed_empty => "tests/fixtures/original/parse_error_unclosed_empty.chyp",
+    // The search-composition laws, checked by upstream too.
+    laws_orderers => "laws/orderers.chyp",
+    laws_filters => "laws/filters.chyp",
+    laws_drivers => "laws/drivers.chyp",
+    laws_sync_spiders => "laws/sync_spiders.chyp",
 }
 
 /// Fixtures where upstream's checker raises: every part upstream reached
@@ -183,7 +199,7 @@ fn assert_crash_handled(rel: &str, crash_line: i64, error: &str) {
 #[test]
 fn crash_theorem_as_rule() {
     // Upstream: KeyError: 't1'.
-    assert_crash_handled("tests/fixtures/crash/theorem_as_rule.chyp", 12, "Rule t1 not defined.");
+    assert_crash_handled("tests/fixtures/crash/theorem_as_rule.chyp", 13, "Rule t1 not defined.");
 }
 
 #[test]
@@ -191,7 +207,7 @@ fn crash_illtyped_step() {
     // Upstream: RuleError: Inputs must match on LHS and RHS of rule (...).
     assert_crash_handled(
         "tests/fixtures/crash/illtyped_step.chyp",
-        7,
+        8,
         "Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])",
     );
 }

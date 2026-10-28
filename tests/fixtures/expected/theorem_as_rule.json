@@ -4,31 +4,25 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 4,
+   "line": 5,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 5,
+   "line": 6,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "TheoremPart",
-   "line": 6,
+   "line": 7,
    "name": "t1",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 7,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 9,
+   "line": 8,
    "name": "",
    "status": "valid"
   },
@@ -39,20 +33,26 @@
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "RewritePart",
    "line": 11,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "RewritePart",
+   "kind": "ProofQedPart",
    "line": 12,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 13,
    "name": "use_thm",
    "status": "checking"
   },
   {
    "kind": "RewritePart",
-   "line": 13,
+   "line": 14,
    "name": "after",
    "status": "unchecked"
   }

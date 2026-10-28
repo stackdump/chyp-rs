@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs.
+
 // Smoke test for the wasm32 bundle (run with `make wasm-test`).
 //
 // For every fixture with upstream expectations it:
@@ -16,7 +19,7 @@ const root = new URL("..", import.meta.url).pathname;
 initSync({ module: readFileSync(join(root, "pkg/chyp_bg.wasm")) });
 
 const cli = join(root, "target/release/chyp-rs");
-const dirs = ["tests/fixtures/upstream", "tests/fixtures/derived", "laws"];
+const dirs = ["tests/fixtures/upstream", "tests/fixtures/derived", "tests/fixtures/original", "laws"];
 const files = dirs.flatMap((d) =>
   readdirSync(join(root, d)).filter((f) => f.endsWith(".chyp")).map((f) => join(root, d, f)),
 );
@@ -78,6 +81,22 @@ if (s.rule("nope") !== "null") fail("rule('nope')");
 s.check_all();
 s.reset();
 if (s.position() !== 0 || s.done()) fail("reset()");
+
+// Limits: these overflowed the 1 MiB wasm stack before chains were made
+// iterative and nesting was capped (a trap poisons the instance for good).
+const nest = (n) => `gen f : 1 -> 1\nlet x = ${"(".repeat(n)}f${")".repeat(n)}\n`;
+const okNest = JSON.parse(check(nest(500)));
+if (!okNest.parsed || okNest.errors.length) fail("nesting 500");
+if (JSON.parse(check(nest(501))).parsed) fail("nesting 501 should be a parse error");
+for (const op of [";", "*"]) {
+  const t0 = performance.now();
+  const r = JSON.parse(new Session(`gen f : 1 -> 1\nlet x = ${Array(50000).fill("f").join(` ${op} `)}\n`).check_all());
+  if (!r.parsed || r.errors.length) fail(`50000-term ${op} chain`);
+  console.log(`ok 50000-term '${op}' chain checked in ${Math.round(performance.now() - t0)} ms`);
+}
+if (JSON.parse(check("gen f : 4294967296 -> 1")).parsed) fail("arity limit");
+const after = JSON.parse(check("gen f : 1 -> 1\nrule r : f = f"));
+if (after.parts.length !== 2) fail("instance still usable after the limit tests");
 
 if (failures) {
   console.error(`${failures} failure(s)`);

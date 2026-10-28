@@ -1,8 +1,18 @@
+# SPDX-License-Identifier: Apache-2.0
+#
 # Spider fusion for sync points.
 #
 # Source: ontology-pflow-xyz ROADMAP.md, Phase 6 "Model composition":
 #   "lk:event: transition fusion. Draw it as a synchronising spider joining
 #    two boxes, not as a wire."
+#
+# The generators, the seven Frobenius-algebra rules (assoc, unitL, unitR,
+# coassoc, counitL, counitR, frob) and the proofs fuse_one_wire and
+# fuse_one_wire_mirror are adapted from Chyp's examples/frobenius.chyp
+# (https://github.com/akissinger/chyp, commit 3d28483, by Aleks Kissinger,
+# Apache-2.0): its m, u, n, v are renamed join, start, fork, stop and its
+# proofs frobL, frobR are renamed fuse_one_wire, fuse_one_wire_mirror.
+# Changed by the chyp-rs contributors, 2026.
 #
 # A sync point is a spider on the event wire: a special commutative Frobenius
 # algebra. `join` merges two event wires, `fork` splits one, `start`/`stop`

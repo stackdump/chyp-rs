@@ -1,8 +1,8 @@
 chyp-rs
 Copyright 2026 the chyp-rs contributors
 
-This product is a Rust port of part of Chyp, "an interactive theorem prover
-for string diagrams":
+This product is an unofficial Rust port of part of Chyp, "an interactive
+theorem prover for string diagrams":
 
   Chyp
   Copyright (C) 2022-2023 Aleks Kissinger
@@ -10,15 +10,31 @@ for string diagrams":
   Ported from commit 3d28483 ("fixed some bugs in the docs").
   Licensed under the Apache License, Version 2.0.
 
-Chyp's design and algorithms (cospans of hypergraphs, convex matching,
-double-pushout rewriting, the proof-checking model and the layer
-decomposition used for layout) are Aleks Kissinger's. The files under src/
-that carry a "Ported from Chyp" header are modified translations of the
-named Chyp source files; each header lists what was changed.
+It is not affiliated with or endorsed by Aleks Kissinger or the Chyp project.
 
-The test fixtures in tests/fixtures/upstream/ are copied unmodified from
-Chyp's examples/ directory at the same commit. The fixtures in
-tests/fixtures/derived/ are derived from those examples, as stated at the top
-of each file.
+The files under src/ whose header begins "Derived from Chyp" are modified
+translations of the Chyp source files named in that header, which also
+reproduces their copyright notices and lists what was changed. The other
+files are new.
+
+Test fixtures and law files:
+  - tests/fixtures/upstream/ holds Chyp's examples/frobenius.chyp, hopf.chyp,
+    module.chyp and smc.chyp, copied unmodified from commit 3d28483.
+  - tests/fixtures/derived/proof_test_explicit.chyp is derived from Chyp's
+    examples/proof_test.chyp, and tests/fixtures/derived/ssfa_inlined.chyp
+    from examples/frobenius.chyp and examples/ssfa.chyp; the changes are
+    listed at the top of each file.
+  - laws/sync_spiders.chyp adapts the Frobenius-algebra rules and the frobL
+    and frobR proofs of Chyp's examples/frobenius.chyp, as stated at its top.
+  - tests/fixtures/original/ and tests/fixtures/crash/ are original to
+    chyp-rs, as are laws/orderers.chyp, filters.chyp and drivers.chyp.
+  - tests/fixtures/expected/ holds the results of running upstream Chyp
+    (commit 3d28483) on those files, produced by tools/upstream_expected.py.
+
+Chyp is by Aleks Kissinger and the Chyp contributors. The theory it
+implements is from the "String Diagram Rewrite Theory" papers by Bonchi,
+Gadducci, Kissinger, Sobocinski and Zanasi (arXiv:2012.01847,
+arXiv:2104.14686, and part III).
 
 This port is licensed under the Apache License, Version 2.0 (see LICENSE).
+Third-party crates linked into its builds are listed in THIRD-PARTY-NOTICES.

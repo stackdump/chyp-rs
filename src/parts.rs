@@ -1,11 +1,16 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/parts.py. Copyright (C) 2022 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026): the class
-// hierarchy is flattened into one `Part` struct with a `PartKind`; ImportPart
-// is not ported (imports are not supported), nor are the editor-only fields
-// (`layed_out`, `stub`, `term_pos` is kept for the JSON output).
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// file chyp/parts.py, by Aleks Kissinger.
+//
+// chyp/parts.py carries no copyright notice of its own;
+// Chyp is licensed under the Apache License, Version 2.0.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
+//   - the class hierarchy is flattened into one `Part` struct with a
+//     `PartKind`, whose class names the JSON output and the tests use;
+//   - ImportPart is not ported (imports are not supported), nor are the
+//     editor-only fields `layed_out` and `stub`.
 
 //! The checkable pieces of a theory file.
 
@@ -43,7 +48,10 @@ impl PartKind {
 
     /// Proof steps carry a proof state after checking.
     pub fn is_proof_step(self) -> bool {
-        matches!(self, PartKind::ProofStart | PartKind::ProofQed | PartKind::ApplyTactic | PartKind::Rewrite)
+        matches!(
+            self,
+            PartKind::ProofStart | PartKind::ProofQed | PartKind::ApplyTactic | PartKind::Rewrite
+        )
     }
 }
 

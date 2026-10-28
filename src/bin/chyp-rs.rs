@@ -1,6 +1,10 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs (not derived from a Chyp source file).
+
 //! chyp-rs command line: check theory files and print diagrams as JSON.
 
 use std::fs;
+use std::io::{self, Write};
 use std::process::ExitCode;
 
 use chyp::checker::Checker;
@@ -18,6 +22,21 @@ USAGE:
                               (or only part number PART)
 
 Exit status: 0 if every file parsed and no step was invalid, 1 otherwise, 2 on usage errors.";
+
+/// Print a line to stdout. If stdout is closed (e.g. piped into `head`),
+/// stop quietly instead of panicking as `println!` does.
+macro_rules! out {
+    ($($arg:tt)*) => {{
+        let mut o = io::stdout().lock();
+        if let Err(e) = writeln!(o, $($arg)*) {
+            if e.kind() == io::ErrorKind::BrokenPipe {
+                std::process::exit(0);
+            }
+            eprintln!("chyp-rs: {}", e);
+            std::process::exit(2);
+        }
+    }};
+}
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|e| format!("{}: {}", path, e))
@@ -38,7 +57,11 @@ fn describe(state: &State, i: usize) -> String {
             } else {
                 format!("by {}({})", p.tactic, p.tactic_args.join(","))
             };
-            let name = if p.name.is_empty() { "step".to_string() } else { p.name.clone() };
+            let name = if p.name.is_empty() {
+                "step".to_string()
+            } else {
+                p.name.clone()
+            };
             format!("rewrite {} {}", name, by)
         }
         PartKind::ApplyTactic => format!("apply {}({})", p.tactic, p.tactic_args.join(",")),
@@ -62,15 +85,15 @@ fn cmd_check(files: &[String]) -> Result<bool, String> {
     let mut all_ok = true;
     for path in files {
         let state = chyp::check_source(&read(path)?);
-        println!("{}", path);
+        out!("{}", path);
         for (i, p) in state.parts.iter().enumerate() {
             if matches!(p.kind, PartKind::Gen | PartKind::Let | PartKind::Rule) {
                 continue;
             }
-            println!("{}", describe(&state, i));
+            out!("{}", describe(&state, i));
         }
         print_errors(path, &state);
-        println!(
+        out!(
             "  {} valid, {} invalid{}",
             state.count(Status::Valid),
             state.count(Status::Invalid),
@@ -94,14 +117,14 @@ fn cmd_step(path: &str) -> Result<bool, String> {
             Some(ps) if p.kind.is_proof_step() => format!("  [{} goal(s) left]", ps.goals.len()),
             _ => String::new(),
         };
-        println!("{}{}", describe(&state, i), goals);
+        out!("{}{}", describe(&state, i), goals);
         for e in &state.errors[seen_errors..] {
-            println!("         error: {}", e.msg);
+            out!("         error: {}", e.msg);
         }
         seen_errors = state.errors.len();
     }
     for e in &state.errors[seen_errors..] {
-        println!("{}:{}: {}", path, e.line, e.msg);
+        out!("{}:{}: {}", path, e.line, e.msg);
     }
     Ok(ok(&state))
 }
@@ -111,22 +134,31 @@ fn cmd_summary(files: &[String]) -> Result<bool, String> {
     let mut all_ok = true;
     for path in files {
         let state = chyp::check_source(&read(path)?);
-        let name = std::path::Path::new(path).file_name().and_then(|s| s.to_str()).unwrap_or(path);
+        let name = std::path::Path::new(path)
+            .file_name()
+            .and_then(|s| s.to_str())
+            .unwrap_or(path);
         out.push(chyp::json::summary(name, &state));
         all_ok &= ok(&state);
     }
-    println!("{}", serde_json::to_string_pretty(&out).unwrap());
+    out!("{}", serde_json::to_string_pretty(&out).unwrap());
     Ok(all_ok)
 }
 
 fn cmd_json(path: &str, part: Option<&str>) -> Result<bool, String> {
     let state = chyp::check_source(&read(path)?);
     match part {
-        None => println!("{}", serde_json::to_string_pretty(&chyp::json::theory(&state, true)).unwrap()),
+        None => out!(
+            "{}",
+            serde_json::to_string_pretty(&chyp::json::theory(&state, true)).unwrap()
+        ),
         Some(n) => {
             let i: usize = n.parse().map_err(|_| format!("not a part number: {}", n))?;
-            let p = state.parts.get(i).ok_or_else(|| format!("no part {} (there are {})", i, state.parts.len()))?;
-            println!("{}", serde_json::to_string_pretty(&chyp::json::part(p, true)).unwrap());
+            let p = state
+                .parts
+                .get(i)
+                .ok_or_else(|| format!("no part {} (there are {})", i, state.parts.len()))?;
+            out!("{}", serde_json::to_string_pretty(&chyp::json::part(p, true)).unwrap());
         }
     }
     Ok(ok(&state))

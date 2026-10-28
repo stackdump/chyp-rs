@@ -1,0 +1,14 @@
+{
+ "file": "parse_error_comment_paren.chyp",
+ "crash": null,
+ "parts": [],
+ "errors": [
+  {
+   "line": 9,
+   "msg": "Parse error:  ff)\n              ^"
+  }
+ ],
+ "rules": [
+  "refl"
+ ]
+}

@@ -1,15 +1,42 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/graph.py. Copyright (C) 2022 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026):
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// file chyp/graph.py, by Aleks Kissinger.
+//
+// chyp/graph.py carries this notice:
+//
+//         chyp - An interactive theorem prover for string diagrams
+//         Copyright (C) 2022 - Aleks Kissinger
+//
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//     Unless required by applicable law or agreed to in writing, software
+//     distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+//     limitations under the License.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
 //   - translated to Rust;
-//   - single-sorted only: vertex types, register sizes, type/size inference
-//     and redistributers are not ported, so a (co)domain is just a wire count;
-//   - drawing coordinates, colours, highlighting, `value` on vertices, the
-//     `hyper` flag and JSON graph loading are not ported (layout lives in
-//     layout.rs);
-//   - `perm` checks that its argument is a permutation of 0..n-1.
+//   - single-sorted only: vertex types, register sizes, type and size
+//     inference and redistributers are not ported, so a (co)domain is a
+//     number of wires (`type_repr` prints it the way upstream prints a type
+//     list, so error messages are identical);
+//   - drawing coordinates, colours, highlighting, the `value` of vertices,
+//     the `hyper` flag, JSON graph loading (`load_graph`, `graph_from_json`)
+//     and the `__mul__`/`__rshift__` operators (here `par`/`seq`) are not
+//     ported;
+//   - `perm` checks that its argument is a permutation of 0..n-1 (upstream
+//     accepts any list; an index out of range raises IndexError);
+//   - `remove_vertex` and `explode_vertex` return errors instead of raising;
+//   - the boundary index bookkeeping in `set_inputs`, `set_outputs`,
+//     `merge_vertices`, `insert_id_after` and `remove_vertex` updates only
+//     the vertices involved instead of every vertex (same result, linear
+//     instead of quadratic time).
 
 //! Hypergraphs with boundaries: Chyp's representation of string diagrams.
 
@@ -152,12 +179,27 @@ impl Graph {
         let e = self.eindex;
         self.eindex += 1;
         for &v in &s {
-            self.vdata.get_mut(&v).expect("add_edge: unknown source").out_edges.insert(e);
+            self.vdata
+                .get_mut(&v)
+                .expect("add_edge: unknown source")
+                .out_edges
+                .insert(e);
         }
         for &v in &t {
-            self.vdata.get_mut(&v).expect("add_edge: unknown target").in_edges.insert(e);
+            self.vdata
+                .get_mut(&v)
+                .expect("add_edge: unknown target")
+                .in_edges
+                .insert(e);
         }
-        self.edata.insert(e, EData { s, t, value: value.to_string() });
+        self.edata.insert(
+            e,
+            EData {
+                s,
+                t,
+                value: value.to_string(),
+            },
+        );
         e
     }
 
@@ -189,10 +231,16 @@ impl Graph {
                     ed.s.retain(|&x| x != v);
                 }
             }
-            let inputs: Vec<usize> = self.inputs.iter().copied().filter(|&x| x != v).collect();
-            self.set_inputs(inputs);
-            let outputs: Vec<usize> = self.outputs.iter().copied().filter(|&x| x != v).collect();
-            self.set_outputs(outputs);
+            // Rebuild a boundary list only if v is on it (otherwise filtering
+            // it out changes nothing).
+            if !vd.in_indices.is_empty() {
+                let inputs: Vec<usize> = self.inputs.iter().copied().filter(|&x| x != v).collect();
+                self.set_inputs(inputs);
+            }
+            if !vd.out_indices.is_empty() {
+                let outputs: Vec<usize> = self.outputs.iter().copied().filter(|&x| x != v).collect();
+                self.set_outputs(outputs);
+            }
         }
         self.vdata.remove(&v);
         Ok(())
@@ -219,7 +267,11 @@ impl Graph {
         self.inputs.extend_from_slice(inp);
         for i in i1..self.inputs.len() {
             let v = self.inputs[i];
-            self.vdata.get_mut(&v).expect("add_inputs: unknown vertex").in_indices.insert(i);
+            self.vdata
+                .get_mut(&v)
+                .expect("add_inputs: unknown vertex")
+                .in_indices
+                .insert(i);
         }
     }
 
@@ -229,26 +281,45 @@ impl Graph {
         self.outputs.extend_from_slice(outp);
         for i in i1..self.outputs.len() {
             let v = self.outputs[i];
-            self.vdata.get_mut(&v).expect("add_outputs: unknown vertex").out_indices.insert(i);
+            self.vdata
+                .get_mut(&v)
+                .expect("add_outputs: unknown vertex")
+                .out_indices
+                .insert(i);
         }
     }
 
     pub fn set_inputs(&mut self, inp: Vec<usize>) {
-        for d in self.vdata.values_mut() {
-            d.in_indices.clear();
+        // Upstream clears every vertex's index set; only the current inputs
+        // have any.
+        for v in std::mem::take(&mut self.inputs) {
+            if let Some(d) = self.vdata.get_mut(&v) {
+                d.in_indices.clear();
+            }
         }
         for (i, &v) in inp.iter().enumerate() {
-            self.vdata.get_mut(&v).expect("set_inputs: unknown vertex").in_indices.insert(i);
+            self.vdata
+                .get_mut(&v)
+                .expect("set_inputs: unknown vertex")
+                .in_indices
+                .insert(i);
         }
         self.inputs = inp;
     }
 
     pub fn set_outputs(&mut self, outp: Vec<usize>) {
-        for d in self.vdata.values_mut() {
-            d.out_indices.clear();
+        // As set_inputs: only the current outputs have index sets to clear.
+        for v in std::mem::take(&mut self.outputs) {
+            if let Some(d) = self.vdata.get_mut(&v) {
+                d.out_indices.clear();
+            }
         }
         for (i, &v) in outp.iter().enumerate() {
-            self.vdata.get_mut(&v).expect("set_outputs: unknown vertex").out_indices.insert(i);
+            self.vdata
+                .get_mut(&v)
+                .expect("set_outputs: unknown vertex")
+                .out_indices
+                .insert(i);
         }
         self.outputs = outp;
     }
@@ -301,7 +372,11 @@ impl Graph {
                     *x = v;
                 }
             }
-            self.vdata.get_mut(&v).expect("merge_vertices: unknown vertex").in_edges.insert(e);
+            self.vdata
+                .get_mut(&v)
+                .expect("merge_vertices: unknown vertex")
+                .in_edges
+                .insert(e);
         }
         for e in w_out {
             let ed = self.edata.get_mut(&e).expect("merge_vertices: unknown edge");
@@ -310,12 +385,25 @@ impl Graph {
                     *x = v;
                 }
             }
-            self.vdata.get_mut(&v).expect("merge_vertices: unknown vertex").out_edges.insert(e);
+            self.vdata
+                .get_mut(&v)
+                .expect("merge_vertices: unknown vertex")
+                .out_edges
+                .insert(e);
         }
-        let inputs: Vec<usize> = self.inputs.iter().map(|&x| if x == w { v } else { x }).collect();
-        self.set_inputs(inputs);
-        let outputs: Vec<usize> = self.outputs.iter().map(|&x| if x == w { v } else { x }).collect();
-        self.set_outputs(outputs);
+        // Replace w by v on the boundary. Upstream rebuilds every vertex's
+        // index sets here; only v's and w's change, so move w's to v.
+        let w_in = std::mem::take(&mut self.vdata.get_mut(&w).unwrap().in_indices);
+        let w_out = std::mem::take(&mut self.vdata.get_mut(&w).unwrap().out_indices);
+        for &i in &w_in {
+            self.inputs[i] = v;
+        }
+        for &i in &w_out {
+            self.outputs[i] = v;
+        }
+        let vd = self.vdata.get_mut(&v).expect("merge_vertices: unknown vertex");
+        vd.in_indices.extend(w_in);
+        vd.out_indices.extend(w_out);
         // Non-strict removal cannot fail.
         let _ = self.remove_vertex(w, false);
     }
@@ -388,8 +476,12 @@ impl Graph {
     /// layout's layer decomposition.
     pub fn insert_id_after(&mut self, v: usize, reverse: bool) -> usize {
         let w = self.add_vertex();
-        let outputs: Vec<usize> = self.outputs.iter().map(|&x| if x == v { w } else { x }).collect();
-        self.set_outputs(outputs);
+        // w takes v's output occurrences (upstream rebuilds all index sets).
+        let v_out = std::mem::take(&mut self.vdata.get_mut(&v).unwrap().out_indices);
+        for &i in &v_out {
+            self.outputs[i] = w;
+        }
+        self.vdata.get_mut(&w).unwrap().out_indices = v_out;
         let v_out: Vec<usize> = self.vdata[&v].out_edges.iter().copied().collect();
         for e in v_out {
             let ed = self.edata.get_mut(&e).unwrap();
@@ -401,7 +493,11 @@ impl Graph {
             self.vdata.get_mut(&w).unwrap().out_edges.insert(e);
         }
         self.vdata.get_mut(&v).unwrap().out_edges.clear();
-        let (s, t) = if reverse { (vec![w], vec![v]) } else { (vec![v], vec![w]) };
+        let (s, t) = if reverse {
+            (vec![w], vec![v])
+        } else {
+            (vec![v], vec![w])
+        };
         self.add_edge(s, t, "id")
     }
 
@@ -499,22 +595,22 @@ pub fn gen(value: &str, n_in: usize, n_out: usize) -> Graph {
 /// The permutation `p`, given as a list [x0, .., x(n-1)] meaning
 /// { x0 -> 0, x1 -> 1, ... }: input `xj` is wired to output `j`. So, for
 /// states a0, a1, a2: `(a0 * a1 * a2) ; perm([2, 0, 1]) = a2 * a0 * a1`.
-pub fn perm(p: &[usize]) -> Result<Graph, GraphError> {
+pub fn perm(p: &[u64]) -> Result<Graph, GraphError> {
     let n = p.len();
     let mut seen = vec![false; n];
     for &x in p {
-        if x >= n || seen[x] {
+        if x >= n as u64 || seen[x as usize] {
             return Err(GraphError(format!(
                 "sw{:?} is not a permutation of 0..{}",
                 p,
                 n.saturating_sub(1)
             )));
         }
-        seen[x] = true;
+        seen[x as usize] = true;
     }
     let mut g = Graph::new();
     let inputs: Vec<usize> = (0..n).map(|_| g.add_vertex()).collect();
-    let outputs: Vec<usize> = p.iter().map(|&i| inputs[i]).collect();
+    let outputs: Vec<usize> = p.iter().map(|&i| inputs[i as usize]).collect();
     g.set_inputs(inputs);
     g.set_outputs(outputs);
     Ok(g)

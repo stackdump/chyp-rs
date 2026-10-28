@@ -1,0 +1,23 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# where upstream's grammar accepts a keyword but no identifier, Lark's
+# contextual lexer splits a keyword off the front of a longer word, so
+# `genf` is `gen f`. Expected results come from running upstream Chyp on
+# this file.
+genf : 1 -> 1
+gen g : 1 -> 1genh : 1 -> 1
+letx = f ; g
+rulefg : f = g
+rewriter : f = g byfg
+rewrites : f = g by rule(fg)genk : 1 -> 1
+showing
+definition = g ; h
+lemmal : f = g
+proofrewriteLHS = RHS byfg
+qedtheorem t2 : f = g
+proofapply fg
+qedlet y = sw
+lety2 = x
+proposition p : f = g
+proof
+  rewriteRHS = LHS by -fg
+qed

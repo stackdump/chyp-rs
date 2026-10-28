@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs (not derived from a Chyp source file).
+
 //! chyp-rs: a Rust port of the core of Chyp, Aleks Kissinger's interactive
 //! theorem prover for string diagrams (<https://github.com/akissinger/chyp>,
 //! commit 3d28483, Apache-2.0).

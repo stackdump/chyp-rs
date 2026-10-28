@@ -1,0 +1,10 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# a ')' inside what looks like a comment closes the tactic arguments
+# upstream, leaving `ff)` unparseable.
+gen f : 1 -> 1
+rule ff : f ; f = f
+theorem t : f ; f = f
+proof
+  apply rule(# x)
+ ff)
+qed

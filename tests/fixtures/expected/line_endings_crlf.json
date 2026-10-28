@@ -1,0 +1,66 @@
+{
+ "file": "line_endings_crlf.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 3,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 4,
+   "name": "g",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 5,
+   "name": "fg",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 7,
+   "name": "r",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 8,
+   "name": "r",
+   "status": "invalid"
+  },
+  {
+   "kind": "LetPart",
+   "line": 10,
+   "name": "x",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 12,
+   "name": "y",
+   "status": "unchecked"
+  }
+ ],
+ "errors": [
+  {
+   "line": 8,
+   "msg": "Undefined term: undefined_x"
+  },
+  {
+   "line": 10,
+   "msg": "Undefined term: nope"
+  },
+  {
+   "line": 12,
+   "msg": "Undefined term: nope2"
+  }
+ ],
+ "rules": [
+  "fg",
+  "refl"
+ ]
+}

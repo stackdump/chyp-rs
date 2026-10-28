@@ -1,0 +1,6 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# LHS right after '=' in a rule is a keyword upstream (the state is shared
+# with rewrite steps), so this is a syntax error.
+gen f : 1 -> 1
+gen LHS : 1 -> 1
+rule r : f = LHS

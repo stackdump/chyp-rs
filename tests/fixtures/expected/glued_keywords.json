@@ -1,0 +1,157 @@
+{
+ "file": "glued_keywords.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 6,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 7,
+   "name": "g",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 7,
+   "name": "h",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 8,
+   "name": "x",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 9,
+   "name": "fg",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 10,
+   "name": "r",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 11,
+   "name": "s",
+   "status": "valid"
+  },
+  {
+   "kind": "GenPart",
+   "line": 11,
+   "name": "k",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 13,
+   "name": "inition_def",
+   "status": "unchecked"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 14,
+   "name": "l",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 15,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 15,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 16,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 16,
+   "name": "t2",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 17,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 17,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 18,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "LetPart",
+   "line": 18,
+   "name": "y",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 19,
+   "name": "y2",
+   "status": "unchecked"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 20,
+   "name": "p",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 21,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 22,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 23,
+   "name": "",
+   "status": "valid"
+  }
+ ],
+ "errors": [
+  {
+   "line": 12,
+   "msg": "Undefined rule: ing"
+  }
+ ],
+ "rules": [
+  "fg",
+  "inition_def",
+  "r",
+  "refl",
+  "s"
+ ]
+}

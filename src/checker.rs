@@ -1,15 +1,24 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/checker.py. Copyright (C) 2022 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026):
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// file chyp/checker.py, by Aleks Kissinger.
+//
+// chyp/checker.py carries no copyright notice of its own;
+// Chyp is licensed under the Apache License, Version 2.0.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
 //   - translated to Rust, as a `Checker` that checks one part per `step()`
-//     so callers can check a proof step by step; `check()` runs it to the end;
+//     so callers can check a proof step by step; `check()` runs it to the
+//     end;
 //   - where upstream raises (a proof with no theorem, an `apply` or `qed`
 //     with no proof state, a top-level rewrite step whose sides have
 //     different types), the part gets an error and is marked invalid and
-//     checking continues;
-//   - `next_rhs` (RHS synthesis for the editor) is not ported.
+//     checking continues; the messages for the proof, `apply` and `qed`
+//     cases are reworded from upstream's exception texts;
+//   - a top-level rewrite step also keeps its proof state, for the JSON
+//     output;
+//   - the `get_revision` early exit (the editor's way to abandon a stale
+//     check) and `next_rhs` (RHS synthesis for the editor) are not ported.
 
 //! Checking proofs, one part at a time.
 
@@ -76,7 +85,11 @@ impl Checker {
             PartKind::ProofQed => match (self.current_theorem, &self.current_proof_state) {
                 (Some(t), Some(cur)) => {
                     let ps = cur.snapshot(line as i64);
-                    let st = if ps.goals.is_empty() { Status::Valid } else { Status::Invalid };
+                    let st = if ps.goals.is_empty() {
+                        Status::Valid
+                    } else {
+                        Status::Invalid
+                    };
                     state.parts[i].proof_state = Some(ps);
                     state.parts[i].status = st;
                     state.parts[t].status = st;
@@ -198,7 +211,10 @@ impl Checker {
 }
 
 fn push_error(state: &mut State, line: usize, msg: &str) {
-    state.errors.push(ErrorEntry { line: line as i64, msg: msg.to_string() });
+    state.errors.push(ErrorEntry {
+        line: line as i64,
+        msg: msg.to_string(),
+    });
 }
 
 /// Move a proof state's errors into the theory's error list.

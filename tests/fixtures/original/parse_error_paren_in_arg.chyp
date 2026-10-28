@@ -1,0 +1,8 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# a '(' ends a multi-line tactic argument. Upstream reports the line of
+# the '('.
+gen f : 1 -> 1
+rule ff : f ; f = f
+rewrite r : f ; f
+  = f by rule(ff
+let x = (f)

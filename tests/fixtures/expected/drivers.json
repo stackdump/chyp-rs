@@ -4,157 +4,157 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 14,
+   "line": 17,
    "name": "chain",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 15,
+   "line": 18,
    "name": "nil",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 16,
+   "line": 19,
    "name": "chain_assoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 17,
+   "line": 20,
    "name": "chain_unitR",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 19,
+   "line": 22,
    "name": "core",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 20,
+   "line": 23,
    "name": "null_window",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 21,
+   "line": 24,
    "name": "budget",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 22,
+   "line": 25,
    "name": "plain",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 25,
+   "line": 28,
    "name": "plain_id",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 28,
+   "line": 31,
    "name": "budget_idem",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 31,
+   "line": 34,
    "name": "solver_def",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 36,
+   "line": 39,
    "name": "solver_unfold",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 41,
+   "line": 44,
    "name": "plain_dropped",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 42,
+   "line": 45,
    "name": "plain_dropped",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 43,
+   "line": 46,
    "name": "plain_dropped",
    "status": "valid"
   },
   {
    "kind": "TheoremPart",
-   "line": 46,
+   "line": 49,
    "name": "budget_rewrap",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 48,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 50,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
    "line": 51,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 52,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofQedPart",
    "line": 53,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 59,
+   "line": 54,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 55,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 56,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 62,
    "name": "wrapped_chain_regroup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 60,
+   "line": 63,
    "name": "wrapped_chain_regroup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 64,
+   "line": 67,
    "name": "wrapped_nil",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 70,
+   "line": 73,
    "name": "drivers_dont_commute",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 74,
+   "line": 77,
    "name": "drivers_dont_commute_plain",
    "status": "invalid"
   }

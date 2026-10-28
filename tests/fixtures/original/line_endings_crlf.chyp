@@ -1,0 +1,12 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# Windows line endings.
+gen f : 1 -> 1
+gen g : 1 -> 1
+rule fg : f = g
+rewrite r : f
+  = g by fg
+  = undefined_x
+# comment
+let x = nope
+
+let y = nope2

@@ -1,17 +1,64 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// files chyp/proofstate.py, chyp/tactic/__init__.py and
-// chyp/tactic/ruletac.py. Copyright (C) 2022-2023 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026):
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// files chyp/proofstate.py, chyp/tactic/__init__.py and
+// chyp/tactic/ruletac.py, by Aleks Kissinger.
+//
+// chyp/tactic/__init__.py carries this notice:
+//
+//         chyp - An interactive theorem prover for string diagrams
+//         Copyright (C) 2023 - Aleks Kissinger
+//
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//     Unless required by applicable law or agreed to in writing, software
+//     distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+//     limitations under the License.
+//
+// chyp/tactic/ruletac.py carries this notice:
+//
+//         chyp - An interactive theorem prover for string diagrams
+//         Copyright (C) 2023 - Aleks Kissinger
+//
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//     Unless required by applicable law or agreed to in writing, software
+//     distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+//     limitations under the License.
+//
+// chyp/proofstate.py carries no copyright notice of its own;
+// Chyp is licensed under the Apache License, Version 2.0.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
 //   - translated to Rust;
-//   - only the `rule` and `refl` tactics are ported. `simp` (and the local
-//     context, goal assumptions, RHS rewriting, size bounds and the `repeat`
-//     loop that only `simp` used) are not, so `simp` is an unknown tactic;
-//   - RHS synthesis for the editor (`make_rhs` / `next_rhs`) and highlighting
+//   - only the `rule` and `refl` tactics are ported. `simp` is not (it is an
+//     unknown tactic here), nor is what only `simp` used: the local rule
+//     context, RHS rewriting, size bounds and the `repeat` loop. Goal
+//     assumptions are not ported either; nothing populates them at 3d28483
+//     (only the editor and `next_rhs` read them);
+//   - the `Tactic` class hierarchy is replaced by `run_tactic`; proof states
+//     take the rule table as an argument instead of holding the `State`, and
+//     collect their errors for the checker to append;
+//   - `RuleTable` reproduces the initial `rules`/`rule_sequence` of
+//     chyp/state.py (the built-in `refl` rule at sequence 0);
+//   - RHS synthesis for the editor (`make_rhs`, `next_rhs`) and highlighting
 //     are not ported;
 //   - where upstream raises (a theorem used as a rule raises KeyError; DPO's
-//     NotImplementedError), an error is recorded on the step instead.
+//     NotImplementedError), an error is recorded on the step instead;
+//   - rule expressions are matched by hand rather than with `re`, skipping
+//     exactly what Python's `\s` skips.
 
 //! Proof states (a stack of goals) and the tactics that act on them.
 
@@ -64,7 +111,13 @@ pub struct ProofState {
 
 impl ProofState {
     pub fn new(sequence: usize, goals: Vec<Goal>) -> ProofState {
-        ProofState { sequence, goals, line: -1, errors: Vec::new(), seen: BTreeSet::new() }
+        ProofState {
+            sequence,
+            goals,
+            line: -1,
+            errors: Vec::new(),
+            seen: BTreeSet::new(),
+        }
     }
 
     /// A fresh proof state with copies of the goals, for the step at `line`.
@@ -181,7 +234,8 @@ pub fn parse_rule_expr(expr: &str) -> Option<(bool, String)> {
     if converse {
         rest = &rest[1..];
     }
-    let rest = rest.trim_start();
+    // Python's `\s` is str.isspace(): Rust's White_Space plus U+001C..U+001F.
+    let rest = rest.trim_start_matches(|c: char| c.is_whitespace() || ('\u{1c}'..='\u{1f}').contains(&c));
     let mut chars = rest.char_indices();
     match chars.next() {
         Some((_, c)) if c.is_ascii_alphabetic() || c == '_' => {}
@@ -252,5 +306,7 @@ mod tests {
         assert_eq!(parse_rule_expr("- x_1"), Some((true, "x_1".into())));
         assert_eq!(parse_rule_expr("  -x"), None);
         assert_eq!(parse_rule_expr("1x"), None);
+        assert_eq!(parse_rule_expr("-\u{1c}ff"), Some((true, "ff".into())));
+        assert_eq!(parse_rule_expr("# c\n ff"), None);
     }
 }

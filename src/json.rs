@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 the chyp-rs contributors. New in chyp-rs (not derived from a Chyp source file).
+
 //! JSON output: diagrams with their layout, parts, proof states, and whole
 //! theories. (New in chyp-rs; upstream's GUI drew diagrams with Qt instead.)
 //!
@@ -84,8 +87,11 @@ pub fn rule(r: &Rule) -> Value {
 
 /// A proof state: its goals, top first, each with both sides as diagrams.
 pub fn proof_state(ps: &ProofState) -> Value {
-    let goals: Vec<Value> =
-        ps.goals.iter().map(|g| json!({ "lhs": diagram(&g.formula.lhs), "rhs": diagram(&g.formula.rhs) })).collect();
+    let goals: Vec<Value> = ps
+        .goals
+        .iter()
+        .map(|g| json!({ "lhs": diagram(&g.formula.lhs), "rhs": diagram(&g.formula.rhs) }))
+        .collect();
     json!({ "goals": goals })
 }
 
@@ -111,7 +117,10 @@ pub fn part(p: &Part, diagrams: bool) -> Value {
         m.insert("rhs_side".into(), json!(s.as_str()));
     }
     if p.kind.is_proof_step() {
-        m.insert("goals_after".into(), json!(p.proof_state.as_ref().map(|ps| ps.goals.len())));
+        m.insert(
+            "goals_after".into(),
+            json!(p.proof_state.as_ref().map(|ps| ps.goals.len())),
+        );
     }
     if diagrams {
         if let Some(g) = &p.graph {

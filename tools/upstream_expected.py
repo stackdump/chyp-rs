@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 the chyp-rs contributors. New in chyp-rs.
 """Produce the expected results for chyp-rs's faithfulness tests by running
 upstream Chyp headless.
 

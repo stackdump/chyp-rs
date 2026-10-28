@@ -1,13 +1,42 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/state.py. Copyright (C) 2022 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026): translated to
-// Rust as a walk over the parser's AST instead of a Lark Transformer, in the
-// same order (each statement bottom-up, left to right), so errors and parts
-// come out in upstream's order. Not ported: imports and namespaces, colours,
-// typed/sized wires and redistributers, one-way rules, converse rewrites,
-// `?` holes, and the editor's revision tracking and `part_at` lookups.
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// file chyp/state.py, by Aleks Kissinger.
+//
+// chyp/state.py carries this notice:
+//
+//         chyp - An interactive theorem prover for string diagrams
+//         Copyright (C) 2022 - Aleks Kissinger
+//
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//     Unless required by applicable law or agreed to in writing, software
+//     distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+//     limitations under the License.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
+//   - translated to Rust as a walk over the parser's AST instead of a Lark
+//     Transformer, in the same order (each statement bottom-up, left to
+//     right), so errors and parts come out in upstream's order;
+//   - a `;` chain's type errors are found by replaying upstream's
+//     right-to-left compositions on the arities alone, and its graph is then
+//     built left to right in linear time (the same vertices and edges in the
+//     same order); `*` chains likewise;
+//   - `State::parse` also does what chyp/parser.py's `parse()` does: line
+//     endings are normalised as Python's universal newlines do when upstream
+//     reads a file, and a syntax error gives one error entry and no parts.
+//     `parsed` is false after a syntax error (upstream sets it to True in
+//     every case); errors are (line, message) without the file name;
+//   - not ported: imports and namespaces, colours, typed and sized wires and
+//     redistributers, one-way rules, converse rewrites, `?` holes, the
+//     `proofs` map, `current_part`, `copy_state_until`, and the editor's
+//     revision tracking and `part_at` lookups.
 
 //! A parsed theory: its terms, rules, parts and errors.
 
@@ -54,6 +83,21 @@ enum Built {
     Missing,
 }
 
+/// `a * b * c` means `a * (b * c)`; the product is associative on the nose
+/// (the same vertices and edges in the same order either way), so it is built
+/// left to right, in linear time. Upstream raises no errors here.
+fn par_chain(gs: Vec<Option<Graph>>) -> Option<Graph> {
+    if gs.iter().any(Option::is_none) {
+        return None;
+    }
+    let mut gs = gs.into_iter().flatten();
+    let mut acc = gs.next()?;
+    for g in gs {
+        acc.tensor(&g);
+    }
+    Some(acc)
+}
+
 impl State {
     fn error(&mut self, line: usize, msg: String) {
         self.errors.push(ErrorEntry { line: line as i64, msg });
@@ -64,8 +108,47 @@ impl State {
         self.parts.push(p);
     }
 
-    /// Build a term's graph, reporting errors as upstream's transformer does.
-    fn term(&mut self, t: &Term) -> Option<Graph> {
+    /// Build a term's graph, reporting errors as upstream's transformer does:
+    /// bottom-up, left to right. The walk uses an explicit stack, so deep
+    /// nesting costs heap, not call stack.
+    fn term(&mut self, root: &Term) -> Option<Graph> {
+        enum Task<'a> {
+            Visit(&'a Term),
+            Combine(&'a Term),
+        }
+        let mut tasks = vec![Task::Visit(root)];
+        let mut values: Vec<Option<Graph>> = Vec::new();
+        while let Some(task) = tasks.pop() {
+            match task {
+                Task::Visit(t) => match t {
+                    Term::Seq(items) | Term::Par(items) => {
+                        tasks.push(Task::Combine(t));
+                        tasks.extend(items.iter().rev().map(Task::Visit));
+                    }
+                    Term::Nested(inner, _) => tasks.push(Task::Visit(inner)),
+                    leaf => {
+                        let g = self.leaf(leaf);
+                        values.push(g);
+                    }
+                },
+                Task::Combine(t) => {
+                    let (Term::Seq(items) | Term::Par(items)) = t else {
+                        unreachable!()
+                    };
+                    let gs = values.split_off(values.len() - items.len());
+                    let g = match t {
+                        Term::Seq(_) => self.seq_chain(items, gs),
+                        _ => par_chain(gs),
+                    };
+                    values.push(g);
+                }
+            }
+        }
+        values.pop().flatten()
+    }
+
+    /// A term with no sub-terms.
+    fn leaf(&mut self, t: &Term) -> Option<Graph> {
         match t {
             Term::Id(_) => Some(identity()),
             Term::Id0(_) => Some(Graph::new()),
@@ -86,30 +169,43 @@ impl State {
                     None
                 }
             },
-            Term::Nested(inner, _) => self.term(inner),
-            Term::Par(a, b, _) => {
-                let ga = self.term(a);
-                let gb = self.term(b);
-                match (ga, gb) {
-                    (Some(ga), Some(gb)) => Some(ga.par(&gb)),
-                    _ => None,
-                }
-            }
-            Term::Seq(a, b, pos) => {
-                let ga = self.term(a);
-                let gb = self.term(b);
-                match (ga, gb) {
-                    (Some(ga), Some(gb)) => match ga.seq(&gb) {
-                        Ok(g) => Some(g),
-                        Err(e) => {
-                            self.error(pos.line, e.0);
-                            None
-                        }
-                    },
-                    _ => None,
-                }
-            }
+            Term::Seq(_) | Term::Par(_) | Term::Nested(..) => unreachable!("not a leaf"),
         }
+    }
+
+    /// `a ; b ; c` means `a ; (b ; c)`: upstream composes from the right,
+    /// each composition reporting a type error on the line where its left
+    /// operand starts. That is replayed on the arities alone, so errors are
+    /// upstream's; the graph is then built left to right, which gives the
+    /// same vertices and edges in the same order (each composite keeps its
+    /// left side's vertices and adds the right side's non-input vertices
+    /// after them), in linear time.
+    fn seq_chain(&mut self, items: &[Term], gs: Vec<Option<Graph>>) -> Option<Graph> {
+        let mut acc_dom = gs.last().unwrap().as_ref().map(|g| g.domain());
+        for (g, t) in gs[..gs.len() - 1].iter().zip(items).rev() {
+            acc_dom = match (g, acc_dom) {
+                (Some(g), Some(dom)) if g.codomain() == dom => Some(g.domain()),
+                (Some(g), Some(dom)) => {
+                    self.error(
+                        t.pos().line,
+                        format!(
+                            "Codomain {} does not match domain {}",
+                            type_repr(g.codomain()),
+                            type_repr(dom)
+                        ),
+                    );
+                    None
+                }
+                _ => None,
+            };
+        }
+        acc_dom?;
+        let mut gs = gs.into_iter().flatten();
+        let mut acc = gs.next()?;
+        for g in gs {
+            acc.compose(&g).expect("arities checked above");
+        }
+        Some(acc)
     }
 
     fn step_rhs(&mut self, step: &RewriteStep) -> Built {
@@ -150,7 +246,10 @@ impl State {
                                     type_repr(g.codomain())
                                 ),
                             );
-                            self.error(pos.line, format!("(Trying to add) {} -> {}.", type_repr(*n_in), type_repr(*n_out)));
+                            self.error(
+                                pos.line,
+                                format!("(Trying to add) {} -> {}.", type_repr(*n_in), type_repr(*n_out)),
+                            );
                         }
                         g
                     }
@@ -242,7 +341,13 @@ impl State {
 
             Stmt::Rewrite { name, term, steps, pos } => self.rewrite(name, term, steps, pos),
 
-            Stmt::Theorem { name, lhs, rhs, pos, proof } => {
+            Stmt::Theorem {
+                name,
+                lhs,
+                rhs,
+                pos,
+                proof,
+            } => {
                 let lhs = self.term(lhs);
                 let rhs = self.term(rhs);
                 self.sequence += 1;
@@ -336,7 +441,13 @@ impl State {
     }
 
     fn proof(&mut self, proof: &parser::Proof) {
-        let mut p = Part::new(PartKind::ProofStart, proof.start.start, proof.start.end, proof.start.line, "");
+        let mut p = Part::new(
+            PartKind::ProofStart,
+            proof.start.start,
+            proof.start.end,
+            proof.start.line,
+            "",
+        );
         p.sequence = self.sequence;
         self.add_part(p);
 
@@ -349,7 +460,11 @@ impl State {
                     p.tactic_args = tactic.args.clone();
                     self.add_part(p);
                 }
-                ProofStep::Rewrite { side: lhs_side, steps, pos } => {
+                ProofStep::Rewrite {
+                    side: lhs_side,
+                    steps,
+                    pos,
+                } => {
                     let built: Vec<Built> = steps.iter().map(|s| self.step_rhs(s)).collect();
                     let mut start = pos.start;
                     for (step, rhs) in steps.iter().zip(built) {
@@ -379,9 +494,17 @@ impl State {
     }
 
     /// Parse a theory and build its graphs, rules and parts (not yet checked).
+    /// Line endings are normalised first, as Python's universal newlines do
+    /// when upstream reads a file: "\r\n" and a lone "\r" become "\n"
+    /// (character offsets refer to the normalised text).
     pub fn parse(src: &str) -> State {
+        let src = if src.contains('\r') {
+            src.replace("\r\n", "\n").replace('\r', "\n")
+        } else {
+            src.to_string()
+        };
         let mut st = State::default();
-        match parser::parse(src) {
+        match parser::parse(&src) {
             Ok(stmts) => {
                 for s in &stmts {
                     st.statement(s);
@@ -389,7 +512,10 @@ impl State {
                 st.parsed = true;
             }
             Err(e) => {
-                st.errors.push(ErrorEntry { line: e.line as i64, msg: e.message });
+                st.errors.push(ErrorEntry {
+                    line: e.line as i64,
+                    msg: e.message,
+                });
             }
         }
         st

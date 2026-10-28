@@ -1,0 +1,220 @@
+{
+ "file": "tactic_args.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 6,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 7,
+   "name": "g",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 8,
+   "name": "ff",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 9,
+   "name": "fg",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 12,
+   "name": "comment_first",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 14,
+   "name": "comment_unknown",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 15,
+   "name": "comment_second",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 17,
+   "name": "comment_after",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 18,
+   "name": "comment_inside",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 20,
+   "name": "spaces",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 21,
+   "name": "newlines",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 24,
+   "name": "unit_sep",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 25,
+   "name": "unit_sep_converse",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 26,
+   "name": "vertical_tab",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 27,
+   "name": "no_args",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 28,
+   "name": "empty_unknown",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 29,
+   "name": "two_args",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 31,
+   "name": "apply_comment",
+   "status": "invalid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 32,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 33,
+   "name": "",
+   "status": "invalid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 35,
+   "name": "",
+   "status": "invalid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 37,
+   "name": "apply_comment_comma",
+   "status": "invalid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 38,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 39,
+   "name": "",
+   "status": "invalid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 41,
+   "name": "",
+   "status": "invalid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 43,
+   "name": "apply_ok",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 44,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 45,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 47,
+   "name": "",
+   "status": "valid"
+  }
+ ],
+ "errors": [
+  {
+   "line": 12,
+   "msg": "Bad rule expression: # note\n    ff"
+  },
+  {
+   "line": 14,
+   "msg": "Unknown tactic: foo"
+  },
+  {
+   "line": 28,
+   "msg": "Unknown tactic: foo"
+  },
+  {
+   "line": 33,
+   "msg": "Bad rule expression: # c\n ff"
+  },
+  {
+   "line": 39,
+   "msg": "Bad rule expression: # x"
+  }
+ ],
+ "rules": [
+  "comment_after",
+  "comment_first",
+  "comment_inside",
+  "comment_second",
+  "comment_unknown",
+  "empty_unknown",
+  "ff",
+  "fg",
+  "newlines",
+  "no_args",
+  "refl",
+  "spaces",
+  "two_args",
+  "unit_sep",
+  "unit_sep_converse",
+  "vertical_tab"
+ ]
+}

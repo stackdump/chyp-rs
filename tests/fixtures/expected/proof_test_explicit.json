@@ -4,145 +4,145 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 8,
+   "line": 11,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 9,
+   "line": 12,
    "name": "g",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 10,
+   "line": 13,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 11,
+   "line": 14,
    "name": "gg",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 15,
+   "line": 18,
    "name": "rwfoo",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 16,
+   "line": 19,
    "name": "rwfoo",
    "status": "valid"
   },
   {
    "kind": "TheoremPart",
-   "line": 19,
+   "line": 22,
    "name": "foo",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 20,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 22,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
    "line": 23,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 24,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ApplyTacticPart",
    "line": 25,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "RewritePart",
    "line": 26,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "TheoremPart",
-   "line": 29,
-   "name": "bar",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofStartPart",
-   "line": 30,
-   "name": "",
-   "status": "valid"
-  },
-  {
    "kind": "RewritePart",
-   "line": 32,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 33,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofQedPart",
-   "line": 34,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "TheoremPart",
-   "line": 37,
-   "name": "baz",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofStartPart",
-   "line": 38,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 40,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 41,
+   "line": 27,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ApplyTacticPart",
-   "line": 42,
+   "line": 28,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ProofQedPart",
+   "line": 29,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 32,
+   "name": "bar",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 33,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 35,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 36,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 37,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 40,
+   "name": "baz",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 41,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
    "line": 43,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 44,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ApplyTacticPart",
+   "line": 45,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 46,
    "name": "",
    "status": "valid"
   }

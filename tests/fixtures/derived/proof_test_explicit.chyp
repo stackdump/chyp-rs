@@ -1,9 +1,12 @@
 # DERIVED FIXTURE (not an upstream file).
-# Upstream examples/proof_test.chyp (Chyp commit 3d28483, Apache-2.0,
-# Copyright (C) 2022 Aleks Kissinger) with two changes, because chyp-rs drops
-# those features:
+# Derived from Chyp's examples/proof_test.chyp (https://github.com/akissinger/chyp,
+# commit 3d28483, by Aleks Kissinger, Apache-2.0; the original has no
+# copyright line). Changed by the chyp-rs contributors, 2026, because
+# chyp-rs drops these features:
 #   - the generator colours ("ffdddd", "ddffdd") are removed;
-#   - each `apply simp(ff)` is replaced by explicit `rewrite LHS` steps.
+#   - in theorem foo, `apply simp(ff)` is replaced by explicit `rewrite LHS`
+#     steps; in theorem baz, `apply simp(ff)` is replaced by `apply ff`;
+#   - this comment and a final newline are added.
 # Expected results come from running upstream Chyp on THIS file.
 gen f : 1 -> 1
 gen g : 1 -> 1

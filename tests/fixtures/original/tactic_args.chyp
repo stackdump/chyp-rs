@@ -1,0 +1,47 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# how upstream Chyp (commit 3d28483) reads tactic arguments: only whitespace
+# is skipped before an argument, so a leading '#' is part of it, and
+# U+001C..U+001F count as whitespace in rule names. Expected results come
+# from running upstream Chyp on this file (tools/upstream_expected.py).
+gen f : 1 -> 1
+gen g : 1 -> 1
+rule ff : f ; f = f
+rule fg : f = g
+
+rewrite comment_first : f ; f
+  = f by rule(# note
+    ff)
+rewrite comment_unknown : f ; f = f by foo(#x)
+rewrite comment_second : f ; f = f by rule(ff, #c
+)
+rewrite comment_after : f ; f = f by rule(ff) # a real comment
+rewrite comment_inside : f ; f = f by rule(ff # kept in the argument
+)
+rewrite spaces : f ; f = f by rule(   ff   )
+rewrite newlines : f ; f = f by rule(
+  ff
+)
+rewrite unit_sep : f = g by rule(fg)
+rewrite unit_sep_converse : g = f by rule(-fg)
+rewrite vertical_tab : f = g by rule(fg)
+rewrite no_args : f ; f = f by rule()
+rewrite empty_unknown : f ; f = f by foo()
+rewrite two_args : f ; f = f by rule(ff, gg)
+
+theorem apply_comment : f ; f = f
+proof
+  apply rule( # c
+ ff)
+qed
+
+theorem apply_comment_comma : f ; f = f
+proof
+  apply rule(# x, y
+ ff)
+qed
+
+theorem apply_ok : f ; f = f
+proof
+  apply rule(
+    ff )
+qed

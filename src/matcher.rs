@@ -1,14 +1,33 @@
-// Ported from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/matcher.py. Copyright (C) 2022 Aleks Kissinger.
-// Licensed under the Apache License, Version 2.0.
+// chyp-rs: a Rust port of part of Chyp.
 //
-// Changes from the original (chyp-rs contributors, 2026):
-//   - translated to Rust; `Matches` is a Rust `Iterator`;
-//   - no vertex type/size checks (single-sorted graphs only);
-//   - debug logging removed.
-// The search order is kept: the match stack is a LIFO, `more()` extends a
-// partial match in the same order, and the vertex/edge maps remember
-// insertion order like Python dicts.
+// Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
+// file chyp/matcher.py, by Aleks Kissinger.
+//
+// chyp/matcher.py carries this notice:
+//
+//         chyp - An interactive theorem prover for string diagrams
+//         Copyright (C) 2022 - Aleks Kissinger
+//
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//     Unless required by applicable law or agreed to in writing, software
+//     distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and
+//     limitations under the License.
+//
+// Modified by the chyp-rs contributors, 2026. Changes from the original:
+//   - translated to Rust; `Matches` is a Rust `Iterator` and a `Match`
+//     borrows its two graphs;
+//   - no vertex type or size checks (single-sorted graphs only);
+//   - debug logging (`match_log`, `DEBUG_MATCH`) removed.
+//   - The search order is kept: the match stack is a LIFO, `more()` extends
+//     a partial match in the same order, and the vertex and edge maps keep
+//     insertion order like Python dicts.
 
 //! Matching a graph into another (convex matches for rewriting, and
 //! isomorphism checking).
@@ -268,7 +287,11 @@ pub struct Matches<'a> {
 impl<'a> Matches<'a> {
     pub fn new(domain: &'a Graph, codomain: &'a Graph, initial: Option<Match<'a>>, convex: bool) -> Matches<'a> {
         let mut initial = initial.unwrap_or_else(|| Match::new(domain, codomain));
-        let stack = if initial.map_scalars() { vec![initial] } else { Vec::new() };
+        let stack = if initial.map_scalars() {
+            vec![initial]
+        } else {
+            Vec::new()
+        };
         Matches { stack, convex }
     }
 }

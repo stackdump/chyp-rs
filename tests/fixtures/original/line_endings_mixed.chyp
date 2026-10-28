@@ -1,0 +1,5 @@
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# mixed line endings.
+gen f : 1 -> 1let x = nope
+let y = nope2
+let z = nope3

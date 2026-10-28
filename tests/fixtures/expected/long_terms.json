@@ -1,0 +1,88 @@
+{
+ "file": "long_terms.chyp",
+ "crash": null,
+ "parts": [
+  {
+   "kind": "GenPart",
+   "line": 4,
+   "name": "f",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 5,
+   "name": "m",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 6,
+   "name": "ff",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 7,
+   "name": "chain400",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 8,
+   "name": "par200",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 9,
+   "name": "nest300",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 10,
+   "name": "bad_mid",
+   "status": "unchecked"
+  },
+  {
+   "kind": "LetPart",
+   "line": 11,
+   "name": "bad_two",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 13,
+   "name": "long",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 14,
+   "name": "long",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 16,
+   "name": "wide",
+   "status": "valid"
+  }
+ ],
+ "errors": [
+  {
+   "line": 10,
+   "msg": "Codomain [(None, 1)] does not match domain [(None, 1), (None, 1)]"
+  },
+  {
+   "line": 11,
+   "msg": "Codomain [(None, 1)] does not match domain [(None, 1), (None, 1)]"
+  }
+ ],
+ "rules": [
+  "ff",
+  "long",
+  "refl",
+  "wide"
+ ]
+}

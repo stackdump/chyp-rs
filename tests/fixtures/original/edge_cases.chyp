@@ -1,4 +1,5 @@
-# DERIVED FIXTURE (not an upstream file): error paths and checker quirks of
+# ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
+# error paths and checker quirks of
 # upstream Chyp (commit 3d28483) that do not crash it. Expected results come
 # from running upstream Chyp on this file (tools/upstream_expected.py).
 
