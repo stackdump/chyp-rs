@@ -6,7 +6,7 @@ target/wasm32-wasip1/wasm/chyp-rs.wasm) and the wasm bundle (pkg/) statically
 link the Rust standard library and the Rust crates below. Crates used only at build time
 (procedural macros and their dependencies: wasm-bindgen-macro,
 wasm-bindgen-macro-support, proc-macro2, quote, syn, bumpalo, rustversion)
-are not part of either artifact. unicode-ident is also a dependency of
+are not part of any of these artifacts. unicode-ident is also a dependency of
 wasm-bindgen-shared, but only through an identifier check the bundle never
 calls, so none of its code is in the bundle.
 

@@ -380,7 +380,7 @@ size-optimised `wasm` profile as the browser bundle (`opt-level = "z"`, LTO,
 `panic = "abort"`, stripped; no `wasm-opt`). The wasm-bindgen API (`src/wasm.rs`) is compiled
 only for `wasm32-unknown-unknown`, so the module's only imports are 13
 `wasi_snapshot_preview1` functions (`args_*`, `environ_*`, `fd_*`, `path_open`,
-`proc_exit`) and it exports `_start` and `memory`. The browser bundle is unaffected (its
+`proc_exit`) and it exports `_start`, `__main_void` and `memory`. The browser bundle is unaffected (its
 `.wasm` is byte-identical with or without the WASI changes).
 
 The build is reproducible: with rustc 1.99.1 (`58cf8f9c3`) and the locked dependencies, two
@@ -415,8 +415,8 @@ is capped at 500; chains are iterative). `make wasi-test` runs every fixture wit
 expectations (not `crash/`) and every law through the module under `node:wasi`, theory on
 stdin and no directories preopened, and requires stdout, stderr and the exit status of
 `summary`, `check` and `json` to be byte-identical to the native CLI on the same file; it
-does the same for invalid UTF-8, an empty theory, a syntax error, the nesting limit and a
-20,000-term chain. As with the browser bundle, anyone distributing the module must include
+runs `summary` and `check` (not `json`) the same way for invalid UTF-8, an empty theory, a
+syntax error, the nesting limit and a 20,000-term chain. As with the browser bundle, anyone distributing the module must include
 `LICENSE`, `NOTICE` and `THIRD-PARTY-NOTICES`.
 
 ## CLI

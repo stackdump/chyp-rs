@@ -27,6 +27,13 @@ const files = dirs.flatMap((d) =>
     .map((f) => `${d}/${f}`),
 );
 
+// Fail loudly if the fixtures went missing rather than passing on zero files.
+const MIN_FILES = 23;
+if (files.length < MIN_FILES) {
+  console.error(`FAIL only ${files.length} .chyp files found, expected at least ${MIN_FILES}`);
+  process.exit(1);
+}
+
 let failures = 0;
 const fail = (msg) => {
   failures++;
@@ -93,6 +100,7 @@ for (const file of files) {
   const path = join(root, file);
   const env = { CHYP_RS_STDIN_NAME: file };
   let ok = true;
+  let summaryMs = 0;
   for (const cmd of ["summary", "check", "json"]) {
     const t0 = performance.now();
     const wasm = runWasi([cmd, "-"], path, env);
@@ -101,10 +109,11 @@ for (const file of files) {
     if (native.status !== 0 && native.status !== 1) fail(`${file}: native ${cmd} exited ${native.status}`);
     ok = same(`${file} ${cmd}`, wasm, native) && ok;
     compared++;
-    if (cmd === "summary" && ok) {
-      const parts = JSON.parse(wasm.stdout.toString("utf8"))[0].parts.length;
-      console.log(`ok ${file}: summary/check/json identical to native (${parts} parts, summary in ${ms} ms, exit ${wasm.status})`);
-    }
+    if (cmd === "summary") summaryMs = ms;
+  }
+  if (ok) {
+    const parts = JSON.parse(runWasi(["summary", "-"], path, env).stdout.toString("utf8"))[0].parts.length;
+    console.log(`ok ${file}: summary/check/json identical to native (${parts} parts, summary in ${summaryMs} ms)`);
   }
 }
 
