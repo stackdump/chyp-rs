@@ -17,7 +17,9 @@ path = "src/bin/chyp-rs.rs"
 [dependencies]
 serde_json = "1"
 
-[target.'cfg(target_arch = "wasm32")'.dependencies]
+# Only for wasm32-unknown-unknown (the browser bundle); the WASI build
+# (wasm32-wasip1) is the CLI and must import nothing but WASI.
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
 # Must equal the version of the installed wasm-bindgen CLI (see Makefile).
 wasm-bindgen = "=0.2.129"
 
@@ -25,7 +27,8 @@ wasm-bindgen = "=0.2.129"
 lto = true
 codegen-units = 1
 
-# Size-optimised profile used for the wasm bundle (`make wasm`).
+# Size-optimised profile used for the wasm bundle (`make wasm`) and the WASI
+# CLI (`make wasi`).
 [profile.wasm]
 inherits = "release"
 opt-level = "z"

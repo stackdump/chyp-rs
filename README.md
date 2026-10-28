@@ -4,7 +4,9 @@ An unofficial Rust port of part of **[Chyp](https://github.com/akissinger/chyp)*
 interactive theorem prover for string diagrams by Aleks Kissinger. It was ported from
 upstream commit [`3d28483`](https://github.com/akissinger/chyp/commit/3d28483) ("fixed some
 bugs in the docs") and is licensed, like Chyp, under the Apache License 2.0. chyp-rs builds
-as a native CLI and for `wasm32-unknown-unknown`, with a wasm-bindgen API. It has no GUI.
+as a native CLI, for `wasm32-unknown-unknown` with a wasm-bindgen API, and as a WASI
+(`wasm32-wasip1`) build of the CLI that a host such as [wazero](https://wazero.io) can run
+without JavaScript. It has no GUI.
 
 It is not affiliated with or endorsed by Aleks Kissinger or the Chyp project; the name Chyp
 is used only to say where the code came from (the crate and wasm module are `chyp_rs`).
@@ -41,6 +43,7 @@ See [Testing](#testing).
 - [The laws](#the-laws)
 - [Testing](#testing)
 - [wasm](#wasm)
+- [WASI](#wasi)
 - [CLI](#cli)
 - [JSON](#json)
 - [Known limitations](#known-limitations)
@@ -54,6 +57,8 @@ make build                                  # target/release/chyp-rs
 ./target/release/chyp-rs check laws/*.chyp  # one line per step, theorem, proof and qed
 make wasm                                   # pkg/: chyp_rs.js + chyp_rs_bg.wasm (+ licence files)
 make wasm-test                              # the fixtures (not crash/) through the wasm bundle (node)
+make wasi                                   # target/wasm32-wasip1/wasm/chyp-rs.wasm, the CLI for WASI
+make wasi-test                              # the fixtures (not crash/) and laws through it, on stdin (node)
 ```
 
 A theory, as Chyp writes it:
@@ -231,8 +236,9 @@ Caveats:
 ## Testing
 
 ```bash
-make test        # 14 unit + 26 faithfulness + 5 law + 6 robustness tests + 1 doctest
+make test        # 14 unit + 26 faithfulness + 5 law + 6 robustness + 5 stdin tests + 1 doctest
 make wasm-test   # the fixtures (not crash/) through the wasm bundle, step by step
+make wasi-test   # the fixtures (not crash/) and laws through the WASI CLI, byte-identical to native
 ```
 
 ### Faithfulness fixtures
@@ -360,6 +366,59 @@ JSON.parse(check(source));            // one shot: everything checked, every dia
 strings; `position()` and `len()` return numbers, `done()` a boolean, and `reset()` nothing.
 The module also exports `upstream_commit()`.
 
+## WASI
+
+```bash
+make wasi        # RUSTFLAGS="--remap-path-prefix=$CARGO_HOME=/cargo" \
+                 #   cargo build --locked --bin chyp-rs --target wasm32-wasip1 --profile wasm
+make wasi-test   # needs node (node:wasi) and the native build
+```
+
+This builds the CLI, unchanged, as a WASI preview 1 command module at
+`target/wasm32-wasip1/wasm/chyp-rs.wasm`: 287,640 bytes (103,603 gzipped), with the same
+size-optimised `wasm` profile as the browser bundle (`opt-level = "z"`, LTO,
+`panic = "abort"`, stripped; no `wasm-opt`). The wasm-bindgen API (`src/wasm.rs`) is compiled
+only for `wasm32-unknown-unknown`, so the module's only imports are 13
+`wasi_snapshot_preview1` functions (`args_*`, `environ_*`, `fd_*`, `path_open`,
+`proc_exit`) and it exports `_start` and `memory`. The browser bundle is unaffected (its
+`.wasm` is byte-identical with or without the WASI changes).
+
+The build is reproducible: with rustc 1.99.1 (`58cf8f9c3`) and the locked dependencies, two
+builds from a clean target directory, and one from a copy of the tree at another path, all
+give sha256 `4573680968c6899fae6a6941005990d96e748e91aeb708234e5ed7be232f66ec`. Panic
+locations name dependency sources under `$CARGO_HOME`, so `make wasi` remaps that prefix to
+`/cargo`; without the remap the bytes depend on the builder's home directory.
+
+A host needs no filesystem. It passes `-` as the FILE, writes the theory to stdin, and reads
+stdout and the exit status (0, 1 or 2, as below); `CHYP_RS_STDIN_NAME` sets the name the
+output reports for stdin (default `-`):
+
+```go
+// Go, with github.com/tetratelabs/wazero (pure Go, no cgo).
+r := wazero.NewRuntime(ctx)
+wasi_snapshot_preview1.MustInstantiate(ctx, r)
+mod, _ := r.CompileModule(ctx, wasmBytes)  // compile once, instantiate per run
+var stdout, stderr bytes.Buffer
+cfg := wazero.NewModuleConfig().
+	WithArgs("chyp-rs", "summary", "-").
+	WithEnv("CHYP_RS_STDIN_NAME", "theory.chyp").
+	WithStdin(strings.NewReader(theory)).
+	WithStdout(&stdout).WithStderr(&stderr)
+_, err := r.InstantiateModule(ctx, mod, cfg)
+// err is a *sys.ExitError carrying the status when it is not 0.
+```
+
+The Go snippet shows the shape of the call; the tests here run the module under `node:wasi`,
+not wazero. A module instance runs the CLI once; instantiate a fresh one per theory. Inputs that would
+overflow the 1 MiB wasm stack are refused as they are in the browser (parenthesis nesting
+is capped at 500; chains are iterative). `make wasi-test` runs every fixture with upstream
+expectations (not `crash/`) and every law through the module under `node:wasi`, theory on
+stdin and no directories preopened, and requires stdout, stderr and the exit status of
+`summary`, `check` and `json` to be byte-identical to the native CLI on the same file; it
+does the same for invalid UTF-8, an empty theory, a syntax error, the nesting limit and a
+20,000-term chain. As with the browser bundle, anyone distributing the module must include
+`LICENSE`, `NOTICE` and `THIRD-PARTY-NOTICES`.
+
 ## CLI
 
 ```
@@ -368,6 +427,12 @@ chyp-rs step FILE           check FILE one part at a time, showing the goals lef
 chyp-rs summary FILE...     print upstream-comparable JSON (the shape of tools/upstream_expected.py)
 chyp-rs json FILE [PART]    print the checked theory as JSON with laid-out diagrams
 ```
+
+A FILE of `-` reads the theory from standard input. It is read once, so every `-` on a
+command line gets the same text. It is reported as `-` (the `check` header, error lines,
+`summary`'s `file`), or as `$CHYP_RS_STDIN_NAME` when that is set and not empty; with it set
+to a path, stdout, stderr and the exit status are byte for byte those for the path, errors
+and input that is not UTF-8 included (`tests/stdin.rs`).
 
 The exit status is 0 if every file parsed and no part is invalid, 1 otherwise, and 2 on a
 usage error or when a file cannot be read (or PART does not exist). The totals count every
@@ -456,10 +521,12 @@ Derivative Work of Chyp, Copyright (C) 2022-2023 Aleks Kissinger, also Apache-2.
 - **Theory.** The theory Chyp implements is from the "String Diagram Rewrite Theory" papers
   I-III by Bonchi, Gadducci, Kissinger, Sobociński and Zanasi (arXiv:2012.01847,
   arXiv:2104.14686, arXiv:2109.06049).
-- **Distribution.** The CLI binary and the wasm bundle statically link the Rust standard
-  library and third-party crates; see [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES). zmij is
-  MIT; memchr is Unlicense OR MIT, used under the Unlicense; the other crates and the standard
-  library are MIT OR Apache-2.0, used under Apache-2.0; the standard library's Unicode tables
-  are under Unicode-3.0. Anyone distributing
-  either must include `LICENSE`, `NOTICE` and `THIRD-PARTY-NOTICES`; `make wasm` copies all
+- **Distribution.** The CLI binary (native and WASI) and the wasm bundle statically link the
+  Rust standard library and third-party crates, and the WASI module also wasi-libc; see
+  [`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES). zmij is MIT; memchr is Unlicense OR MIT, used
+  under the Unlicense; the other crates and the standard library are MIT OR Apache-2.0, used
+  under Apache-2.0; the standard library's Unicode tables are under Unicode-3.0; wasi-libc is
+  Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT, used under Apache-2.0, with portions
+  from musl (MIT), cloudlibc (BSD-2-Clause) and dlmalloc (CC0). Anyone distributing any of
+  them must include `LICENSE`, `NOTICE` and `THIRD-PARTY-NOTICES`; `make wasm` copies all
   three into `pkg/`.

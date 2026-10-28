@@ -32,7 +32,9 @@ pub mod rewrite;
 pub mod rule;
 pub mod state;
 
-#[cfg(target_arch = "wasm32")]
+// The wasm-bindgen API is for the browser target only. A WASI build
+// (wasm32-wasip1) is the CLI, whose only imports must be WASI's.
+#[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
 pub mod wasm;
 
 pub use state::State;

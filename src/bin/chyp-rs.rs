@@ -6,6 +6,7 @@
 use std::fs;
 use std::io::{self, Write};
 use std::process::ExitCode;
+use std::sync::OnceLock;
 
 use chyp_rs::checker::Checker;
 use chyp_rs::parts::{PartKind, Status};
@@ -21,7 +22,15 @@ USAGE:
   chyp-rs json FILE [PART]    print the checked theory as JSON with laid-out diagrams
                               (or only part number PART)
 
+A FILE of `-` reads the theory from standard input (read once; every `-` gets the
+same text). It is reported as `-`, or as $CHYP_RS_STDIN_NAME if that is set.
+
 Exit status: 0 if every file parsed and no step was invalid, 1 otherwise, 2 on usage errors.";
+
+/// The FILE argument that means standard input.
+const STDIN_ARG: &str = "-";
+/// Environment variable naming standard input in the output (default `-`).
+const STDIN_NAME_VAR: &str = "CHYP_RS_STDIN_NAME";
 
 /// Print a line to stdout. If stdout is closed (e.g. piped into `head`),
 /// stop quietly instead of panicking as `println!` does.
@@ -38,7 +47,29 @@ macro_rules! out {
     }};
 }
 
+/// The name a FILE argument is reported under: itself, or for `-` the value
+/// of $CHYP_RS_STDIN_NAME (when set and not empty). With that set to a path,
+/// the output for `-` is byte for byte the output for the path.
+fn label(path: &str) -> String {
+    if path == STDIN_ARG {
+        if let Some(name) = std::env::var(STDIN_NAME_VAR).ok().filter(|n| !n.is_empty()) {
+            return name;
+        }
+    }
+    path.to_string()
+}
+
+/// Read a FILE argument; `-` is standard input, read in full on first use.
+/// Errors (invalid UTF-8 included) read as they do for a file:
+/// "NAME: message", with NAME from [`label`].
 fn read(path: &str) -> Result<String, String> {
+    if path == STDIN_ARG {
+        static STDIN: OnceLock<Result<String, String>> = OnceLock::new();
+        return STDIN
+            .get_or_init(|| io::read_to_string(io::stdin()).map_err(|e| e.to_string()))
+            .clone()
+            .map_err(|e| format!("{}: {}", label(path), e));
+    }
     fs::read_to_string(path).map_err(|e| format!("{}: {}", path, e))
 }
 
@@ -85,6 +116,7 @@ fn cmd_check(files: &[String]) -> Result<bool, String> {
     let mut all_ok = true;
     for path in files {
         let state = chyp_rs::check_source(&read(path)?);
+        let path = &label(path);
         out!("{}", path);
         for (i, p) in state.parts.iter().enumerate() {
             if matches!(p.kind, PartKind::Gen | PartKind::Let | PartKind::Rule) {
@@ -106,6 +138,7 @@ fn cmd_check(files: &[String]) -> Result<bool, String> {
 
 fn cmd_step(path: &str) -> Result<bool, String> {
     let mut state = State::parse(&read(path)?);
+    let path = &label(path);
     let mut checker = Checker::new();
     let mut seen_errors = 0;
     while let Some(i) = checker.step(&mut state) {
@@ -134,6 +167,7 @@ fn cmd_summary(files: &[String]) -> Result<bool, String> {
     let mut all_ok = true;
     for path in files {
         let state = chyp_rs::check_source(&read(path)?);
+        let path = &label(path);
         let name = std::path::Path::new(path)
             .file_name()
             .and_then(|s| s.to_str())
