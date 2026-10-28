@@ -34,12 +34,12 @@ What it does
 How to run (from the chyp-rs checkout, after `cargo build --release`), with
 a Python that has `lark` installed (upstream's only core dependency):
 
-  PYTHONDONTWRITEBYTECODE=1 python -I tools/fuzz_diff.py \\
+  python -I -B tools/fuzz_diff.py \\
       --chyp ../chyp --port target/release/chyp-rs --cases 1000 --seed 1 \\
       [--keep DIR]
 
   --chyp       an upstream Chyp checkout at commit 3d28483 (only imported;
-               PYTHONDONTWRITEBYTECODE=1 keeps it free of __pycache__)
+               the script never writes __pycache__ into it)
   --port       the chyp-rs binary
   --cases N    number of theories; --seed S makes the run reproducible
                (case I of seed S is always the same theory)
@@ -66,6 +66,10 @@ import subprocess
 import sys
 import tempfile
 import time
+
+# Never write __pycache__ into the upstream checkout, whatever the flags
+# (`python -I` ignores PYTHONDONTWRITEBYTECODE).
+sys.dont_write_bytecode = True
 
 STATUS = {0: 'unchecked', 1: 'checking', 2: 'valid', 3: 'invalid'}
 STEP_KINDS = ('RewritePart', 'ApplyTacticPart')

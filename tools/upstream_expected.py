@@ -19,13 +19,21 @@ If upstream's checker raises (it does for a few ill-formed inputs), "crash"
 records the exception and the parts keep the statuses they had reached.
 
 Usage:
-  python -I tools/upstream_expected.py <chyp checkout at 3d28483> <out dir> <file.chyp>...
+  python -I -B tools/upstream_expected.py <chyp checkout at 3d28483> <out dir> <file.chyp>...
+
+The upstream checkout is only imported, never written to: the script turns
+off bytecode writing itself (note that `python -I` ignores
+PYTHONDONTWRITEBYTECODE).
 
 See the Makefile target `expected`.
 """
 import json
 import os
 import sys
+
+# Never write __pycache__ into the upstream checkout, whatever the flags
+# (`python -I` ignores PYTHONDONTWRITEBYTECODE).
+sys.dont_write_bytecode = True
 
 STATUS = {0: 'unchecked', 1: 'checking', 2: 'valid', 3: 'invalid'}
 

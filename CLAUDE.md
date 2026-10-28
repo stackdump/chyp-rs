@@ -27,11 +27,13 @@ how faithfulness is tested.
   equal upstream's. Upstream quirks are reproduced on purpose (a step with no
   `by` is always invalid; theorems are not usable as rules); only places
   where upstream *raises* are changed, and they are listed in the README.
-- Ported files carry a "Ported from Chyp" header naming the upstream file and
-  listing the changes (Apache-2.0 §4(b)). Keep it accurate when editing.
+- Ported files carry a "Derived from Chyp" header naming the upstream file(s),
+  reproducing their notice and listing the changes (Apache-2.0 §4(b)). Keep it accurate when editing.
 - Never modify `~/Workspace/chyp` (the upstream checkout). To regenerate
   expectations: `make expected PYTHON=<python with lark>`; it runs with
-  `PYTHONDONTWRITEBYTECODE=1` so the checkout stays clean.
+  `python -I -B`, and the scripts set `sys.dont_write_bytecode` themselves, so
+  the checkout gets no `__pycache__` (`python -I` ignores
+  PYTHONDONTWRITEBYTECODE; check with `git status --porcelain --ignored`).
 - `wasm-bindgen` in Cargo.toml is pinned to the installed CLI's version
   (`wasm-bindgen --version`); bump both together.
 

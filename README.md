@@ -270,7 +270,7 @@ holes). Cases where upstream raises are skipped and counted.
 | 3: final code (seeds 201–205) | 11,614 | 71,789 (46,914 / 24,875) | **0** |
 
 Reproduce a campaign with
-`PYTHONDONTWRITEBYTECODE=1 python -I tools/fuzz_diff.py --chyp ../chyp --port target/release/chyp-rs --cases 2500 --seed 201`.
+`python -I -B tools/fuzz_diff.py --chyp ../chyp --port target/release/chyp-rs --cases 2500 --seed 201`.
 It needs a Python with `lark`, and `--corrupt 0.5` adds syntax noise.
 
 ### Reviews

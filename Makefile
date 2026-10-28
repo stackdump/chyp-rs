@@ -43,7 +43,7 @@ check-laws: build
 # Regenerate tests/fixtures/expected/ by running upstream Chyp headless.
 expected:
 	@test "$$(git -C $(CHYP) rev-parse --short=7 HEAD)" = "3d28483" || { echo "$(CHYP) is not at commit 3d28483"; exit 1; }
-	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -I tools/upstream_expected.py $(CHYP) tests/fixtures/expected $(FIXTURES)
+	$(PYTHON) -I -B tools/upstream_expected.py $(CHYP) tests/fixtures/expected $(FIXTURES)
 
 clean:
 	cargo clean
