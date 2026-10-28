@@ -13,8 +13,9 @@
 //   - where upstream raises (a proof with no theorem, an `apply` or `qed`
 //     with no proof state, a top-level rewrite step whose sides have
 //     different types), the part gets an error and is marked invalid and
-//     checking continues; the messages for the proof, `apply` and `qed`
-//     cases are reworded from upstream's exception texts;
+//     checking continues; the messages are upstream's exception texts, with
+//     the `qed` and `apply` ones reworded ("Got qed without theorem or proof
+//     state", "Could not get proof state for \"apply\"");
 //   - a top-level rewrite step also keeps its proof state, for the JSON
 //     output;
 //   - the `get_revision` early exit (the editor's way to abandon a stale

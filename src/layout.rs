@@ -1,7 +1,8 @@
 // chyp-rs: a Rust port of part of Chyp.
 //
 // Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// files chyp/term.py, chyp/layout.py and chyp/graph.py, by Aleks Kissinger.
+// files chyp/term.py, chyp/layout.py and chyp/graph.py, by Aleks Kissinger and
+// the Chyp contributors.
 //
 // chyp/term.py carries this notice:
 //
@@ -55,16 +56,20 @@
 //     limitations under the License.
 //
 // Modified by the chyp-rs contributors, 2026. Changes from the original:
-//   - only `layer_decomp` (from chyp/term.py), the initial coordinates of
-//     `convex_layout` (from chyp/layout.py) and `EData.box_size` (from
-//     chyp/graph.py) are ported; term printing (`graph_to_term` and friends)
-//     is not;
+//   - only `layer_decomp` (from chyp/term.py); `convex_layout`'s initial
+//     coordinates, port offsets, ordering and spacing constraints and final
+//     placement of interior vertices (from chyp/layout.py); and
+//     `EData.box_size` (from chyp/graph.py) are ported; term printing
+//     (`graph_to_term` and friends) is not;
 //   - translated to Rust; sets are iterated in increasing id order, so the
 //     result is deterministic (upstream iterates Python sets); the ready
 //     edges of each layer are tracked incrementally instead of recomputed
 //     (same layers, linear time);
-//   - in the second crossing-reduction pass, a box with no inputs is sorted
-//     by its targets (upstream sorts it to the top of its layer);
+//   - in the second crossing-reduction pass a box's key is mean(sources) +
+//     2 * mean(targets), where upstream counts an empty side's mean as 0 (the
+//     top of the layer); here an empty side takes the other side's mean, so a
+//     box with no inputs sorts by 3 * mean(targets) (upstream: 2 * that) and
+//     a box with no outputs by 3 * mean(sources) (upstream: mean(sources));
 //   - `layer_decomp` also returns the identity edges it inserted (drawn as
 //     plain wire), and a cyclic graph falls back to one box per layer
 //     instead of raising ValueError;
@@ -228,9 +233,9 @@ pub fn layer_decomp(g: &mut Graph) -> Result<(Vec<Vec<usize>>, BTreeSet<usize>),
                 let src = mean(g.source(e), &inp_pos);
                 let p = match &outp_pos {
                     None => src.unwrap_or(0.0),
-                    // Upstream counts a box with no inputs (a state) as being at
-                    // the top; here it stands in its targets' position instead,
-                    // so states do not float up and cross other wires.
+                    // Upstream counts an empty side's mean as 0 (the top of the
+                    // layer); here it takes the other side's mean, so states and
+                    // effects are not pulled up across other wires.
                     Some(op) => {
                         let tgt = mean(g.target(e), op);
                         src.or(tgt).unwrap_or(0.0) + 2.0 * tgt.or(src).unwrap_or(0.0)

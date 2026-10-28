@@ -4,128 +4,140 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 13,
+   "line": 19,
    "name": "chain",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 14,
+   "line": 20,
    "name": "nil",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 16,
+   "line": 22,
    "name": "chain_assoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 17,
+   "line": 23,
    "name": "chain_unitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 18,
+   "line": 24,
    "name": "chain_unitR",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 21,
+   "line": 27,
    "name": "tt_best",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 22,
+   "line": 28,
    "name": "immediate_win",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 23,
+   "line": 29,
    "name": "centrality",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 24,
+   "line": 30,
    "name": "history",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 30,
+   "line": 36,
    "name": "chain4_bracketing",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 31,
-   "name": "chain4_bracketing",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 32,
-   "name": "chain4_bracketing",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 33,
+   "line": 37,
    "name": "chain4_bracketing",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 38,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 39,
+   "name": "chain4_bracketing",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 44,
    "name": "connect4_chain",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 43,
+   "line": 49,
    "name": "nil_middle",
    "status": "valid"
   },
   {
    "kind": "TheoremPart",
-   "line": 45,
+   "line": 51,
    "name": "nil_padding",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 48,
+   "line": 54,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 50,
+   "line": 56,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ProofQedPart",
-   "line": 51,
+   "line": 57,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 57,
+   "line": 68,
    "name": "chain_not_comm",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 61,
+   "line": 72,
    "name": "chain_not_comm_concrete",
+   "status": "invalid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 76,
+   "name": "nil_keeps_order",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 80,
+   "name": "nil_does_not_unswap",
    "status": "invalid"
   }
  ],
@@ -138,6 +150,8 @@
   "chain_unitL",
   "chain_unitR",
   "connect4_chain",
+  "nil_does_not_unswap",
+  "nil_keeps_order",
   "nil_middle",
   "refl"
  ]

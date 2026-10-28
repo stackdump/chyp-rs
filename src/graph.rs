@@ -1,7 +1,7 @@
 // chyp-rs: a Rust port of part of Chyp.
 //
 // Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/graph.py, by Aleks Kissinger.
+// file chyp/graph.py, by Aleks Kissinger and Alexander Koziell-Pipe.
 //
 // chyp/graph.py carries this notice:
 //
@@ -27,9 +27,9 @@
 //     number of wires (`type_repr` prints it the way upstream prints a type
 //     list, so error messages are identical);
 //   - drawing coordinates, colours, highlighting, the `value` of vertices,
-//     the `hyper` flag, JSON graph loading (`load_graph`, `graph_from_json`)
-//     and the `__mul__`/`__rshift__` operators (here `par`/`seq`) are not
-//     ported;
+//     the `hyper` flag and JSON graph loading (`load_graph`,
+//     `graph_from_json`) are not ported;
+//   - the `__mul__`/`__rshift__` operators become the methods `par`/`seq`;
 //   - `perm` checks that its argument is a permutation of 0..n-1 (upstream
 //     accepts any list; an index out of range raises IndexError);
 //   - `remove_vertex` and `explode_vertex` return errors instead of raising;

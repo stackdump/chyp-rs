@@ -89,13 +89,22 @@ rewrite sync_loop_vanishes :
   fork ; join
   = id by spec
 
-# Fusion does NOT pass through an ordinary transition: a sync point on
-# either side of `dequeue` is not one sync point. Rejected.
+# Sync points fuse up to an ordinary transition, but not through it.
+rewrite fuse_up_to_box :
+  join ; fork ; join ; dequeue ; fork
+  = join ; dequeue ; fork by spec
+
+# A rejected step shows only that the cited rule does not turn its left side
+# into its right side, or, with `by refl`, that the two sides are different
+# diagrams. Chyp cannot show that an equation does not follow from the rules.
+#
+# Rejected: fusing the first two sync points leaves `dequeue` between the
+# remaining ones; and two transitions in a row are a different diagram from
+# one of them.
 rewrite no_fusion_through_box :
-  join ; dequeue ; fork
+  join ; fork ; join ; dequeue ; fork
   = join ; fork by spec
 
-# Nor do two transitions fuse into one: rejected.
 rewrite boxes_dont_fuse :
   dequeue ; acquire
-  = acquire by unitL
+  = acquire by refl

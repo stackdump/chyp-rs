@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 # ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
 # error paths and checker quirks of
 # upstream Chyp (commit 3d28483) that do not crash it. Expected results come

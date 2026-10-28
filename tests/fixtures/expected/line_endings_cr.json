@@ -4,58 +4,58 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 3,
+   "line": 4,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 4,
+   "line": 5,
    "name": "g",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 5,
+   "line": 6,
    "name": "fg",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 7,
+   "line": 8,
    "name": "r",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 8,
+   "line": 9,
    "name": "r",
    "status": "invalid"
   },
   {
    "kind": "LetPart",
-   "line": 10,
+   "line": 11,
    "name": "x",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 13,
+   "line": 14,
    "name": "y",
    "status": "unchecked"
   }
  ],
  "errors": [
   {
-   "line": 8,
+   "line": 9,
    "msg": "Undefined term: undefined_x"
   },
   {
-   "line": 10,
+   "line": 11,
    "msg": "Undefined term: nope"
   },
   {
-   "line": 13,
+   "line": 14,
    "msg": "Undefined term: nope2"
   }
  ],

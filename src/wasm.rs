@@ -5,7 +5,7 @@
 //! for the shapes.
 //!
 //! ```js
-//! import init, { Session } from "./pkg/chyp.js";
+//! import init, { Session } from "./pkg/chyp_rs.js";
 //! await init();
 //! const s = new Session(source);       // load (parse) a theory
 //! JSON.parse(s.outline());             // parts, errors, rules

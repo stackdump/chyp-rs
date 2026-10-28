@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 # ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
 # how upstream Chyp (commit 3d28483) reads tactic arguments: only whitespace
 # is skipped before an argument, so a leading '#' is part of it, and

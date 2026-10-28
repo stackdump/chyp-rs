@@ -4,145 +4,151 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 13,
+   "line": 18,
    "name": "meet",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 14,
+   "line": 19,
    "name": "all",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 15,
+   "line": 20,
    "name": "dup",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 17,
+   "line": 22,
    "name": "meet_assoc",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 18,
+   "line": 23,
    "name": "meet_unitL",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 19,
+   "line": 24,
    "name": "meet_comm",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 20,
+   "line": 25,
    "name": "meet_idem",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 23,
+   "line": 28,
    "name": "legal",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 24,
+   "line": 29,
    "name": "threat",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 25,
+   "line": 30,
    "name": "legal_copy",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 30,
-   "name": "meet_unitR",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 31,
+   "line": 35,
    "name": "meet_unitR",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 36,
+   "name": "meet_unitR",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 41,
    "name": "meet_comm_concrete",
    "status": "valid"
   },
   {
    "kind": "TheoremPart",
-   "line": 39,
+   "line": 44,
    "name": "legal_idem",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 41,
+   "line": 46,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 43,
+   "line": 48,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 44,
+   "line": 49,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ProofQedPart",
-   "line": 45,
+   "line": 50,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 50,
-   "name": "meet_idem3",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 51,
+   "line": 55,
    "name": "meet_idem3",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
    "line": 56,
+   "name": "meet_idem3",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 61,
    "name": "meet3_regroup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 57,
+   "line": 62,
    "name": "meet3_regroup",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 63,
+   "line": 73,
    "name": "unitR_needs_comm",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 68,
+   "line": 79,
+   "name": "meet_drops_unit",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 83,
    "name": "meet_not_absorbing",
    "status": "invalid"
   }
@@ -154,6 +160,7 @@
   "meet_assoc",
   "meet_comm",
   "meet_comm_concrete",
+  "meet_drops_unit",
   "meet_idem",
   "meet_idem3",
   "meet_not_absorbing",

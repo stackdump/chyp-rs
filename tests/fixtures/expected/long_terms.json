@@ -4,57 +4,51 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 4,
+   "line": 5,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 5,
+   "line": 6,
    "name": "m",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 6,
+   "line": 7,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 7,
+   "line": 8,
    "name": "chain400",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 8,
+   "line": 9,
    "name": "par200",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 9,
+   "line": 10,
    "name": "nest300",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 10,
+   "line": 11,
    "name": "bad_mid",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 11,
+   "line": 12,
    "name": "bad_two",
    "status": "unchecked"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 13,
-   "name": "long",
-   "status": "valid"
   },
   {
    "kind": "RewritePart",
@@ -64,18 +58,24 @@
   },
   {
    "kind": "RewritePart",
-   "line": 16,
+   "line": 15,
+   "name": "long",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 17,
    "name": "wide",
    "status": "valid"
   }
  ],
  "errors": [
   {
-   "line": 10,
+   "line": 11,
    "msg": "Codomain [(None, 1)] does not match domain [(None, 1), (None, 1)]"
   },
   {
-   "line": 11,
+   "line": 12,
    "msg": "Codomain [(None, 1)] does not match domain [(None, 1), (None, 1)]"
   }
  ],

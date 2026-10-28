@@ -214,13 +214,19 @@
   },
   {
    "kind": "RewritePart",
-   "line": 96,
+   "line": 95,
+   "name": "fuse_up_to_box",
+   "status": "valid"
+  },
+  {
+   "kind": "RewritePart",
+   "line": 106,
    "name": "no_fusion_through_box",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 101,
+   "line": 110,
    "name": "boxes_dont_fuse",
    "status": "invalid"
   }
@@ -238,6 +244,7 @@
   "fuse_one_wire",
   "fuse_one_wire_mirror",
   "fuse_two_wires",
+  "fuse_up_to_box",
   "no_fusion_through_box",
   "refl",
   "spec",

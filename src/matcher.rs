@@ -1,7 +1,7 @@
 // chyp-rs: a Rust port of part of Chyp.
 //
 // Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/matcher.py, by Aleks Kissinger.
+// file chyp/matcher.py, by Aleks Kissinger and Alexander Koziell-Pipe.
 //
 // chyp/matcher.py carries this notice:
 //
@@ -27,12 +27,13 @@
 //   - debug logging (`match_log`, `DEBUG_MATCH`) removed.
 //   - The search order is kept: the match stack is a LIFO, `more()` extends
 //     a partial match in the same order, and the vertex and edge maps keep
-//     insertion order like Python dicts.
+//     insertion order like Python dicts (with a keyed index beside them, so
+//     lookups are not linear scans).
 
 //! Matching a graph into another (convex matches for rewriting, and
 //! isomorphism checking).
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 
 use crate::graph::Graph;
 use crate::rule::Rule;
@@ -42,16 +43,16 @@ use crate::rule::Rule;
 pub struct Match<'a> {
     pub domain: &'a Graph,
     pub codomain: &'a Graph,
-    /// (domain vertex, codomain vertex) pairs in insertion order.
+    /// (domain vertex, codomain vertex) pairs in insertion order (the order
+    /// `more()` walks them in, as upstream walks its dict).
     pub vertex_map: Vec<(usize, usize)>,
     pub vertex_image: BTreeSet<usize>,
     /// (domain edge, codomain edge) pairs in insertion order.
     pub edge_map: Vec<(usize, usize)>,
     pub edge_image: BTreeSet<usize>,
-}
-
-fn lookup(map: &[(usize, usize)], k: usize) -> Option<usize> {
-    map.iter().find(|(a, _)| *a == k).map(|(_, b)| *b)
+    /// The same maps, keyed for lookup.
+    vertex_index: BTreeMap<usize, usize>,
+    edge_index: BTreeMap<usize, usize>,
 }
 
 impl<'a> Match<'a> {
@@ -63,17 +64,31 @@ impl<'a> Match<'a> {
             vertex_image: BTreeSet::new(),
             edge_map: Vec::new(),
             edge_image: BTreeSet::new(),
+            vertex_index: BTreeMap::new(),
+            edge_index: BTreeMap::new(),
         }
+    }
+
+    fn map_vertex(&mut self, d: usize, c: usize) {
+        self.vertex_map.push((d, c));
+        self.vertex_index.insert(d, c);
+        self.vertex_image.insert(c);
+    }
+
+    fn map_edge(&mut self, d: usize, c: usize) {
+        self.edge_map.push((d, c));
+        self.edge_index.insert(d, c);
+        self.edge_image.insert(c);
     }
 
     /// Image of a domain vertex, if mapped.
     pub fn vertex(&self, v: usize) -> Option<usize> {
-        lookup(&self.vertex_map, v)
+        self.vertex_index.get(&v).copied()
     }
 
     /// Image of a domain edge, if mapped.
     pub fn edge(&self, e: usize) -> Option<usize> {
-        lookup(&self.edge_map, e)
+        self.edge_index.get(&e).copied()
     }
 
     /// Try to map `domain_vertex` to `codomain_vertex`. Matches may only be
@@ -101,8 +116,7 @@ impl<'a> Match<'a> {
             }
         }
 
-        self.vertex_map.push((domain_vertex, codomain_vertex));
-        self.vertex_image.insert(codomain_vertex);
+        self.map_vertex(domain_vertex, codomain_vertex);
 
         // Edges are mapped injectively, so equal degree on interior vertices
         // guarantees the gluing conditions.
@@ -126,8 +140,7 @@ impl<'a> Match<'a> {
         if self.edge_image.contains(&codomain_edge) {
             return false;
         }
-        self.edge_map.push((domain_edge, codomain_edge));
-        self.edge_image.insert(codomain_edge);
+        self.map_edge(domain_edge, codomain_edge);
 
         // As upstream, sources+targets are zipped pairwise (so a length
         // mismatch is truncated rather than rejected).
@@ -184,8 +197,7 @@ impl<'a> Match<'a> {
             match codomain_scalars.iter().position(|(_, val)| *val == ed.value) {
                 Some(i) => {
                     let (ce, _) = codomain_scalars.remove(i);
-                    self.edge_map.push((e, ce));
-                    self.edge_image.insert(ce);
+                    self.map_edge(e, ce);
                 }
                 None => return false,
             }

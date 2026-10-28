@@ -41,7 +41,7 @@ how faithfulness is tested.
 
 ```bash
 make test        # unit + faithfulness + law + robustness tests
-make wasm        # pkg/chyp.js + pkg/chyp_bg.wasm, prints sizes
+make wasm        # pkg/chyp_rs.js + pkg/chyp_rs_bg.wasm, prints sizes
 make wasm-test   # every fixture through the wasm bundle, step by step (node)
 ./target/release/chyp-rs check laws/*.chyp
 ```

@@ -1,7 +1,7 @@
 // chyp-rs: a Rust port of part of Chyp.
 //
 // Derived from Chyp (https://github.com/akissinger/chyp), commit 3d28483,
-// file chyp/parser.py, by Aleks Kissinger.
+// file chyp/parser.py, by Aleks Kissinger and the Chyp contributors.
 //
 // chyp/parser.py carries this notice:
 //

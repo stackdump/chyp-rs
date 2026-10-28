@@ -4,38 +4,38 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 5,
+   "line": 6,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 6,
+   "line": 7,
    "name": "m",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 7,
+   "line": 8,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 8,
+   "line": 9,
    "name": "bad",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 9,
+   "line": 10,
    "name": "after",
    "status": "unchecked"
   }
  ],
  "errors": [
   {
-   "line": 8,
+   "line": 9,
    "msg": "Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])"
   }
  ],

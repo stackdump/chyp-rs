@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 # ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
 # upstream Chyp (3d28483) raises KeyError while checking this
 # file, because a theorem's rule is recorded in `rule_sequence` but never in

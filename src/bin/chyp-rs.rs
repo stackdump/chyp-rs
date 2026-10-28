@@ -7,9 +7,9 @@ use std::fs;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use chyp::checker::Checker;
-use chyp::parts::{PartKind, Status};
-use chyp::state::State;
+use chyp_rs::checker::Checker;
+use chyp_rs::parts::{PartKind, Status};
+use chyp_rs::state::State;
 
 const USAGE: &str = "\
 chyp-rs: check Chyp theory files (a Rust port of Chyp's core, upstream commit 3d28483)
@@ -84,7 +84,7 @@ fn print_errors(path: &str, state: &State) {
 fn cmd_check(files: &[String]) -> Result<bool, String> {
     let mut all_ok = true;
     for path in files {
-        let state = chyp::check_source(&read(path)?);
+        let state = chyp_rs::check_source(&read(path)?);
         out!("{}", path);
         for (i, p) in state.parts.iter().enumerate() {
             if matches!(p.kind, PartKind::Gen | PartKind::Let | PartKind::Rule) {
@@ -133,12 +133,12 @@ fn cmd_summary(files: &[String]) -> Result<bool, String> {
     let mut out = Vec::new();
     let mut all_ok = true;
     for path in files {
-        let state = chyp::check_source(&read(path)?);
+        let state = chyp_rs::check_source(&read(path)?);
         let name = std::path::Path::new(path)
             .file_name()
             .and_then(|s| s.to_str())
             .unwrap_or(path);
-        out.push(chyp::json::summary(name, &state));
+        out.push(chyp_rs::json::summary(name, &state));
         all_ok &= ok(&state);
     }
     out!("{}", serde_json::to_string_pretty(&out).unwrap());
@@ -146,11 +146,11 @@ fn cmd_summary(files: &[String]) -> Result<bool, String> {
 }
 
 fn cmd_json(path: &str, part: Option<&str>) -> Result<bool, String> {
-    let state = chyp::check_source(&read(path)?);
+    let state = chyp_rs::check_source(&read(path)?);
     match part {
         None => out!(
             "{}",
-            serde_json::to_string_pretty(&chyp::json::theory(&state, true)).unwrap()
+            serde_json::to_string_pretty(&chyp_rs::json::theory(&state, true)).unwrap()
         ),
         Some(n) => {
             let i: usize = n.parse().map_err(|_| format!("not a part number: {}", n))?;
@@ -158,7 +158,10 @@ fn cmd_json(path: &str, part: Option<&str>) -> Result<bool, String> {
                 .parts
                 .get(i)
                 .ok_or_else(|| format!("no part {} (there are {})", i, state.parts.len()))?;
-            out!("{}", serde_json::to_string_pretty(&chyp::json::part(p, true)).unwrap());
+            out!(
+                "{}",
+                serde_json::to_string_pretty(&chyp_rs::json::part(p, true)).unwrap()
+            );
         }
     }
     Ok(ok(&state))

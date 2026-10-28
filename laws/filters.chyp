@@ -4,7 +4,12 @@
 # Sound filters form a meet-semilattice under intersection.
 #
 # Source: ontology-pflow-xyz ROADMAP.md, Phase 6 "Search composition":
-#   "Sound filters: a meet-semilattice under intersection."
+#   "Sound filters: a meet-semilattice under intersection (an empty result
+#    falls back to all moves). Bounds: interval meet. Neither is built."
+#
+# The rules below model plain intersection. They do not hold with the
+# empty-result fallback: with it, meet is not associative (for A = {1} and
+# B = C = {2}, (A meet B) meet C = {2} but A meet (B meet C) = all moves).
 #
 # A wire carries a set of moves. `meet` intersects two sets, `all` is the set
 # of all moves (the unit of intersection), and `dup` copies a set, which is
@@ -56,13 +61,23 @@ rewrite meet3_regroup :
   = legal * threat * all ; id * meet ; meet by meet_assoc
   = legal * threat ; meet by meet_unitR
 
-# Without commutativity the left unit rule does not apply on the right:
-# meet_unitL's LHS feeds `all` into the FIRST input of meet. Rejected.
+# A rejected step shows only that the cited rule does not turn its left side
+# into its right side, or, with `by refl`, that the two sides are different
+# diagrams. Chyp cannot show that an equation does not follow from the rules.
+#
+# The right unit law is true (meet_unitR above proves it), but not by
+# meet_unitL alone: that rule's left side feeds `all` into the FIRST input
+# of meet, so it does not apply here. Rejected.
 rewrite unitR_needs_comm :
   id * all ; meet
   = id by meet_unitL
 
-# Intersection is not absorbing: `all` does not swallow a filter. Rejected.
+# Intersection is not absorbing: removing the unit `all` leaves the filter,
+# not `all`. The first step is accepted, the second rejected.
+rewrite meet_drops_unit :
+  all * legal ; meet
+  = legal by meet_unitL
+
 rewrite meet_not_absorbing :
-  legal * all ; meet
+  all * legal ; meet
   = all by meet_unitL

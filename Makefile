@@ -3,7 +3,7 @@
 # chyp-rs: build, test, wasm bundle, and upstream expectations.
 
 WASM_TARGET := wasm32-unknown-unknown
-WASM_OUT    := target/$(WASM_TARGET)/wasm/chyp.wasm
+WASM_OUT    := target/$(WASM_TARGET)/wasm/chyp_rs.wasm
 # Upstream Chyp checkout at commit 3d28483, and a Python with `lark`, for
 # regenerating the expected results (`make expected`).
 CHYP        ?= ../chyp
@@ -20,17 +20,17 @@ build:
 test:
 	cargo test
 
-# The wasm bundle: pkg/chyp.js + pkg/chyp_bg.wasm (ES module, `--target web`),
+# The wasm bundle: pkg/chyp_rs.js + pkg/chyp_rs_bg.wasm (ES module, `--target web`),
 # with the LICENSE, NOTICE and THIRD-PARTY-NOTICES that must ship with it.
 wasm:
 	cargo build --lib --target $(WASM_TARGET) --profile wasm
-	wasm-bindgen --target web --out-dir pkg --out-name chyp $(WASM_OUT)
+	wasm-bindgen --target web --out-dir pkg --out-name chyp_rs $(WASM_OUT)
 	cp LICENSE NOTICE THIRD-PARTY-NOTICES pkg/
 	@$(MAKE) --no-print-directory size
 
 size:
-	@printf 'pkg/chyp_bg.wasm  %8d bytes  (%d gzipped)\n' $$(wc -c < pkg/chyp_bg.wasm) $$(gzip -9 -c pkg/chyp_bg.wasm | wc -c)
-	@printf 'pkg/chyp.js       %8d bytes  (%d gzipped)\n' $$(wc -c < pkg/chyp.js) $$(gzip -9 -c pkg/chyp.js | wc -c)
+	@printf 'pkg/chyp_rs_bg.wasm  %8d bytes  (%d gzipped)\n' $$(wc -c < pkg/chyp_rs_bg.wasm) $$(gzip -9 -c pkg/chyp_rs_bg.wasm | wc -c)
+	@printf 'pkg/chyp_rs.js       %8d bytes  (%d gzipped)\n' $$(wc -c < pkg/chyp_rs.js) $$(gzip -9 -c pkg/chyp_rs.js | wc -c)
 
 # Runs every fixture through the wasm bundle step by step (needs node).
 wasm-test: wasm build

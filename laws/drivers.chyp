@@ -13,6 +13,13 @@
 # Here a wire is either an order chain (into the core) or a search (out of
 # it). `core` turns an order chain into a search; a driver maps a search to a
 # search, so wrapping a driver around the search is sequential composition.
+# chyp-rs drops Chyp's typed wires, so "order chain" and "search" are a
+# reading convention only: this theory also accepts ill-typed composites
+# such as `solver ; solver`.
+#
+# The two wrapping orders are not assumed to be equal: the ROADMAP says they
+# differ "in general". (pflow-rs's plan.rs currently applies null_window and
+# budget in a fixed order, whatever order the plan lists them in.)
 
 gen chain : 2 -> 1
 gen nil : 0 -> 1
@@ -24,7 +31,8 @@ gen null_window : 1 -> 1
 gen budget : 1 -> 1
 gen plain : 1 -> 1
 
-# `plain` is the identity driver: wrapping it changes nothing.
+# `plain` is a hypothetical identity driver (it stands for an empty driver
+# list; pflow-rs has only null_window and budget): wrapping it changes nothing.
 rule plain_id : plain = id
 
 # A node budget wrapped around the same node budget is that budget.
@@ -66,12 +74,16 @@ rewrite wrapped_nil :
   id * nil ; chain ; solver
   = solver by chain_unitR
 
-# Order matters: budget around null-window is not null-window around
-# budget. No rule proves it, so both steps are rejected.
-rewrite drivers_dont_commute :
-  core ; null_window ; budget
-  = core ; budget ; null_window by budget_idem
+# A rejected step shows only that the cited rule does not turn its left side
+# into its right side, or, with `by refl`, that the two sides are different
+# diagrams. Chyp cannot show that an equation does not follow from the rules.
+#
+# Rejected: unfolding the solver gives null-window inside budget, not the
+# other order; and the two orders are different diagrams.
+rewrite solver_is_not_swapped :
+  solver
+  = core ; budget ; null_window by solver_def
 
-rewrite drivers_dont_commute_plain :
+rewrite driver_orders_differ :
   core ; null_window ; budget
-  = core ; budget ; null_window by plain_id
+  = core ; budget ; null_window by refl

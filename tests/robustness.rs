@@ -9,13 +9,13 @@
 
 use std::time::Instant;
 
-use chyp::parser::{MAX_NESTING, MAX_WIRES};
-use chyp::parts::Status;
+use chyp_rs::parser::{MAX_NESTING, MAX_WIRES};
+use chyp_rs::parts::Status;
 
-fn theory(src: &str) -> chyp::State {
-    let state = chyp::check_source(src);
+fn theory(src: &str) -> chyp_rs::State {
+    let state = chyp_rs::check_source(src);
     // Laying out every diagram must not panic either.
-    let _ = chyp::json::theory(&state, true);
+    let _ = chyp_rs::json::theory(&state, true);
     state
 }
 
@@ -152,4 +152,24 @@ fn random_inputs_do_not_panic() {
         }
         theory(&w.join(" "));
     }
+}
+
+/// The CLI stops quietly (exit 0, no panic) when its stdout is closed early,
+/// as when piped into `head`.
+#[test]
+fn cli_exits_quietly_on_a_closed_pipe() {
+    use std::process::{Command, Stdio};
+    let hopf = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/upstream/hopf.chyp");
+    let mut child = Command::new(env!("CARGO_BIN_EXE_chyp-rs"))
+        .args(["json", hopf])
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+    // Close the read end at once; the output (megabytes) cannot fit in the pipe.
+    drop(child.stdout.take());
+    let out = child.wait_with_output().unwrap();
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    assert_eq!(out.status.code(), Some(0), "stderr: {}", stderr);
+    assert!(!stderr.contains("panicked"), "stderr: {}", stderr);
 }

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 # ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
 # a syntax error. Upstream reports one parse error and no
 # parts at all; so does chyp-rs (the message text differs, the line does not).

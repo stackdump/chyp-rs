@@ -4,8 +4,8 @@
 # Apache-2.0; the originals have no copyright line), concatenated by the
 # chyp-rs contributors, 2026. Changes: ssfa.chyp's first line
 # ("import frobenius") is removed, because chyp-rs does not support imports,
-# and a separator comment is inserted between the two files; both files are
-# otherwise unmodified. Expected results come from running upstream Chyp on
+# a separator comment is inserted between the two files, and this comment is
+# added at the top; both files are otherwise unmodified. Expected results come from running upstream Chyp on
 # THIS file (tools/upstream_expected.py).
 
 # In this file, we'll define a non-commutative Frobenius algebra and prove some

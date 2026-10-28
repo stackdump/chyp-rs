@@ -13,10 +13,10 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { join, basename } from "node:path";
-import { initSync, Session, check, upstream_commit } from "../pkg/chyp.js";
+import { initSync, Session, check, upstream_commit } from "../pkg/chyp_rs.js";
 
 const root = new URL("..", import.meta.url).pathname;
-initSync({ module: readFileSync(join(root, "pkg/chyp_bg.wasm")) });
+initSync({ module: readFileSync(join(root, "pkg/chyp_rs_bg.wasm")) });
 
 const cli = join(root, "target/release/chyp-rs");
 const dirs = ["tests/fixtures/upstream", "tests/fixtures/derived", "tests/fixtures/original", "laws"];

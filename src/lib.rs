@@ -14,8 +14,8 @@
 //!
 //! ```
 //! let src = "gen f : 1 -> 1\nrule ff : f ; f = f\nrewrite r : f ; f ; f = f ; f by ff";
-//! let state = chyp::check_source(src);
-//! assert!(state.parts.iter().all(|p| p.status != chyp::parts::Status::Invalid));
+//! let state = chyp_rs::check_source(src);
+//! assert!(state.parts.iter().all(|p| p.status != chyp_rs::parts::Status::Invalid));
 //! ```
 //!
 //! See README.md for what is and is not ported.

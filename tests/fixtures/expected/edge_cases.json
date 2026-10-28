@@ -4,98 +4,92 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 6,
-   "name": "f",
-   "status": "unchecked"
-  },
-  {
-   "kind": "GenPart",
    "line": 7,
-   "name": "g",
+   "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
    "line": 8,
-   "name": "m",
+   "name": "g",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
    "line": 9,
+   "name": "m",
+   "status": "unchecked"
+  },
+  {
+   "kind": "GenPart",
+   "line": 10,
    "name": "u",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 10,
+   "line": 11,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 11,
+   "line": 12,
    "name": "unitL",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 15,
+   "line": 16,
    "name": "bare_refl",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 16,
+   "line": 17,
    "name": "by_refl",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 17,
+   "line": 18,
    "name": "not_iso",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 20,
+   "line": 21,
    "name": "unknown_rule",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 21,
+   "line": 22,
    "name": "too_early",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 22,
+   "line": 23,
    "name": "self_ref",
    "status": "invalid"
   },
   {
    "kind": "RulePart",
-   "line": 23,
+   "line": 24,
    "name": "later",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 27,
+   "line": 28,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 28,
-   "name": "g",
-   "status": "unchecked"
-  },
-  {
-   "kind": "LetPart",
    "line": 29,
-   "name": "h",
+   "name": "g",
    "status": "unchecked"
   },
   {
@@ -105,46 +99,46 @@
    "status": "unchecked"
   },
   {
-   "kind": "RulePart",
+   "kind": "LetPart",
    "line": 31,
+   "name": "h",
+   "status": "unchecked"
+  },
+  {
+   "kind": "RulePart",
+   "line": 32,
    "name": "q_def",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 35,
+   "line": 36,
    "name": "p",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 36,
+   "line": 37,
    "name": "p_def",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 37,
+   "line": 38,
    "name": "use_p_def",
    "status": "valid"
   },
   {
    "kind": "LetPart",
-   "line": 40,
+   "line": 41,
    "name": "bad_ref",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 41,
+   "line": 42,
    "name": "bad_comp",
    "status": "unchecked"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 43,
-   "name": "undefined_mid",
-   "status": "invalid"
   },
   {
    "kind": "RewritePart",
@@ -153,32 +147,32 @@
    "status": "invalid"
   },
   {
+   "kind": "RewritePart",
+   "line": 45,
+   "name": "undefined_mid",
+   "status": "invalid"
+  },
+  {
    "kind": "RulePart",
-   "line": 50,
+   "line": 51,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "TheoremPart",
-   "line": 54,
+   "line": 55,
    "name": "no_proof",
    "status": "checking"
   },
   {
    "kind": "TheoremPart",
-   "line": 58,
+   "line": 59,
    "name": "after_close",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 59,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "RewritePart",
-   "line": 61,
+   "line": 60,
    "name": "",
    "status": "valid"
   },
@@ -190,31 +184,31 @@
   },
   {
    "kind": "RewritePart",
-   "line": 64,
-   "name": "",
-   "status": "invalid"
-  },
-  {
-   "kind": "ProofQedPart",
-   "line": 65,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "TheoremPart",
-   "line": 67,
-   "name": "rhs_side",
-   "status": "valid"
-  },
-  {
-   "kind": "ProofStartPart",
-   "line": 68,
+   "line": 63,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 70,
+   "line": 65,
+   "name": "",
+   "status": "invalid"
+  },
+  {
+   "kind": "ProofQedPart",
+   "line": 66,
+   "name": "",
+   "status": "valid"
+  },
+  {
+   "kind": "TheoremPart",
+   "line": 68,
+   "name": "rhs_side",
+   "status": "valid"
+  },
+  {
+   "kind": "ProofStartPart",
+   "line": 69,
    "name": "",
    "status": "valid"
   },
@@ -225,217 +219,223 @@
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "RewritePart",
    "line": 72,
    "name": "",
    "status": "valid"
   },
   {
+   "kind": "ProofQedPart",
+   "line": 73,
+   "name": "",
+   "status": "valid"
+  },
+  {
    "kind": "TheoremPart",
-   "line": 74,
+   "line": 75,
    "name": "apply_forms",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 75,
+   "line": 76,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ApplyTacticPart",
-   "line": 76,
+   "line": 77,
    "name": "",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 78,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ApplyTacticPart",
    "line": 79,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "ApplyTacticPart",
    "line": 80,
    "name": "",
    "status": "valid"
   },
   {
+   "kind": "ProofQedPart",
+   "line": 81,
+   "name": "",
+   "status": "valid"
+  },
+  {
    "kind": "TheoremPart",
-   "line": 82,
+   "line": 83,
    "name": "apply_plain",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 83,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ApplyTacticPart",
    "line": 84,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "ApplyTacticPart",
    "line": 85,
    "name": "",
    "status": "valid"
   },
   {
+   "kind": "ProofQedPart",
+   "line": 86,
+   "name": "",
+   "status": "valid"
+  },
+  {
    "kind": "TheoremPart",
-   "line": 87,
+   "line": 88,
    "name": "apply_refl",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 88,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ApplyTacticPart",
    "line": 89,
    "name": "",
    "status": "valid"
   },
   {
-   "kind": "ProofQedPart",
+   "kind": "ApplyTacticPart",
    "line": 90,
    "name": "",
    "status": "valid"
   },
   {
+   "kind": "ProofQedPart",
+   "line": 91,
+   "name": "",
+   "status": "valid"
+  },
+  {
    "kind": "TheoremPart",
-   "line": 92,
+   "line": 93,
    "name": "wrong_step",
    "status": "invalid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 93,
+   "line": 94,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 95,
-   "name": "",
-   "status": "invalid"
-  },
-  {
-   "kind": "ProofQedPart",
    "line": 96,
    "name": "",
    "status": "invalid"
   },
   {
+   "kind": "ProofQedPart",
+   "line": 97,
+   "name": "",
+   "status": "invalid"
+  },
+  {
    "kind": "GenPart",
-   "line": 99,
+   "line": 100,
    "name": "x",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 100,
+   "line": 101,
    "name": "y",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 101,
+   "line": 102,
    "name": "xy",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 102,
+   "line": 103,
    "name": "scalars",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 103,
+   "line": 104,
    "name": "scalars_none",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 104,
+   "line": 105,
    "name": "empty_side",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 105,
+   "line": 106,
    "name": "to_empty",
    "status": "valid"
   }
  ],
  "errors": [
   {
-   "line": 26,
+   "line": 27,
    "msg": "Rule 'ff' already defined."
   },
   {
-   "line": 28,
+   "line": 29,
    "msg": "Term 'g' already defined with incompatible type [(None, 1)] -> [(None, 1)]."
   },
   {
-   "line": 28,
+   "line": 29,
    "msg": "(Trying to add) [(None, 1), (None, 1)] -> [(None, 1), (None, 1)]."
   },
   {
-   "line": 30,
+   "line": 31,
    "msg": "Term 'h' already defined."
   },
   {
-   "line": 32,
+   "line": 33,
    "msg": "Rule \"q_def\" already defined."
   },
   {
-   "line": 40,
+   "line": 41,
    "msg": "Undefined term: zz"
   },
   {
-   "line": 41,
+   "line": 42,
    "msg": "Codomain [(None, 1)] does not match domain [(None, 1), (None, 1)]"
   },
   {
-   "line": 43,
+   "line": 44,
    "msg": "Undefined term: zz"
   },
   {
-   "line": 47,
+   "line": 48,
    "msg": "Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])"
   },
   {
-   "line": 51,
+   "line": 52,
    "msg": "Undefined rule: nosuch_rule"
   },
   {
-   "line": 20,
+   "line": 21,
    "msg": "Rule nosuch not defined."
   },
   {
-   "line": 21,
+   "line": 22,
    "msg": "Attempting to use rule later before it is defined/proven (9 >= 7)."
   },
   {
-   "line": 22,
+   "line": 23,
    "msg": "Attempting to use rule self_ref before it is defined/proven (8 >= 8)."
   },
   {
-   "line": 76,
+   "line": 77,
    "msg": "Unknown tactic: foo"
   }
  ],

@@ -4,7 +4,7 @@
  "parts": [],
  "errors": [
   {
-   "line": 6,
+   "line": 7,
    "msg": "Parse error: rule r : f = LHS\n                          ^"
   }
  ],

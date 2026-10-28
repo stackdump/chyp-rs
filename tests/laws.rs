@@ -1,26 +1,29 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026 the chyp-rs contributors. New in chyp-rs (not derived from a Chyp source file).
 
-//! The search-composition laws (laws/*.chyp), from ontology-pflow-xyz
-//! ROADMAP.md, Phase 6: orderers are a monoid under chaining, sound filters a
-//! meet-semilattice under intersection, drivers are endomorphisms wrapped
-//! around the core, and event links are synchronising spiders that fuse.
+//! The laws in laws/*.chyp, from ontology-pflow-xyz ROADMAP.md, Phase 6:
+//! from search composition, orderers are a monoid under chaining, sound
+//! filters a meet-semilattice under intersection, and drivers are
+//! endomorphisms wrapped around the core; from model composition, event links
+//! are synchronising spiders that fuse.
 //!
 //! tests/faithfulness.rs checks that chyp-rs agrees with upstream Chyp on
 //! these files. This file states what they are meant to show: every named
 //! law is proved (all its steps valid; for a theorem, its `qed` too), and
-//! every deliberate non-theorem is rejected.
+//! every step meant to fail is rejected. A rejected step shows only that its
+//! rule does not produce the claimed right side (or, `by refl`, that the two
+//! sides are different diagrams); Chyp cannot show an equation unprovable.
 
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::PathBuf;
 
-use chyp::parts::{PartKind, Status};
+use chyp_rs::parts::{PartKind, Status};
 
 /// Statuses of the proof steps of each named rewrite / theorem.
 fn proofs(file: &str) -> BTreeMap<String, Vec<Status>> {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("laws").join(file);
-    let state = chyp::check_source(&fs::read_to_string(&path).unwrap());
+    let state = chyp_rs::check_source(&fs::read_to_string(&path).unwrap());
     assert!(state.parsed, "{} does not parse: {:?}", file, state.errors);
     let mut out: BTreeMap<String, Vec<Status>> = BTreeMap::new();
     let mut owner = String::new();
@@ -80,9 +83,16 @@ fn assert_laws(file: &str, proved: &[&str], rejected: &[&str]) {
 fn orderers_form_a_monoid_under_chaining() {
     assert_laws(
         "orderers.chyp",
-        &["chain4_bracketing", "connect4_chain", "nil_middle", "nil_padding"],
-        // Chaining is lexicographic, so not commutative.
-        &["chain_not_comm", "chain_not_comm_concrete"],
+        &[
+            "chain4_bracketing",
+            "connect4_chain",
+            "nil_middle",
+            "nil_padding",
+            "nil_keeps_order",
+        ],
+        // The two orders of a chain are different diagrams; cancelling `nil`
+        // leaves the swapped chain.
+        &["chain_not_comm", "chain_not_comm_concrete", "nil_does_not_unswap"],
     );
 }
 
@@ -96,6 +106,7 @@ fn filters_form_a_meet_semilattice() {
             "legal_idem",
             "meet_idem3",
             "meet3_regroup",
+            "meet_drops_unit",
         ],
         &["unitR_needs_comm", "meet_not_absorbing"],
     );
@@ -112,7 +123,8 @@ fn drivers_wrap_the_core_and_do_not_commute() {
             "wrapped_chain_regroup",
             "wrapped_nil",
         ],
-        &["drivers_dont_commute", "drivers_dont_commute_plain"],
+        // Unfolding the solver gives one wrapping order, not the other.
+        &["solver_is_not_swapped", "driver_orders_differ"],
     );
 }
 
@@ -127,6 +139,7 @@ fn sync_spiders_fuse() {
             "sync_legs_unordered",
             "fuse_three",
             "sync_loop_vanishes",
+            "fuse_up_to_box",
         ],
         &["no_fusion_through_box", "boxes_dont_fuse"],
     );
@@ -137,10 +150,10 @@ fn sync_spiders_fuse() {
 #[test]
 fn proved_laws_are_reusable_rules() {
     let src = fs::read_to_string(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("laws/orderers.chyp")).unwrap();
-    let state = chyp::check_source(&src);
+    let state = chyp_rs::check_source(&src);
     let r = &state.table.rules["chain4_bracketing"];
     assert_eq!((r.lhs.domain(), r.lhs.codomain()), (4, 1));
-    let state = chyp::check_source(&format!(
+    let state = chyp_rs::check_source(&format!(
         "{}\nrewrite chain4_back :\n  chain * id * id ; chain * id ; chain\n  = chain * chain ; chain by -chain4_bracketing\n",
         src
     ));

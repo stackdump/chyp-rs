@@ -27,11 +27,11 @@ fn expected(stem: &str) -> Value {
     serde_json::from_str(&fs::read_to_string(&p).unwrap_or_else(|e| panic!("{}: {}", p.display(), e))).unwrap()
 }
 
-fn actual(path: &Path) -> chyp::State {
-    chyp::check_source(&fs::read_to_string(path).unwrap())
+fn actual(path: &Path) -> chyp_rs::State {
+    chyp_rs::check_source(&fs::read_to_string(path).unwrap())
 }
 
-fn parts_of(state: &chyp::State) -> Vec<(String, i64, String, String)> {
+fn parts_of(state: &chyp_rs::State) -> Vec<(String, i64, String, String)> {
     state
         .parts
         .iter()
@@ -158,7 +158,7 @@ faithful! {
     original_parse_error_paren_in_arg => "tests/fixtures/original/parse_error_paren_in_arg.chyp",
     original_parse_error_unclosed_args => "tests/fixtures/original/parse_error_unclosed_args.chyp",
     original_parse_error_unclosed_empty => "tests/fixtures/original/parse_error_unclosed_empty.chyp",
-    // The search-composition laws, checked by upstream too.
+    // The Phase 6 laws, checked by upstream too.
     laws_orderers => "laws/orderers.chyp",
     laws_filters => "laws/filters.chyp",
     laws_drivers => "laws/drivers.chyp",
@@ -199,7 +199,7 @@ fn assert_crash_handled(rel: &str, crash_line: i64, error: &str) {
 #[test]
 fn crash_theorem_as_rule() {
     // Upstream: KeyError: 't1'.
-    assert_crash_handled("tests/fixtures/crash/theorem_as_rule.chyp", 13, "Rule t1 not defined.");
+    assert_crash_handled("tests/fixtures/crash/theorem_as_rule.chyp", 14, "Rule t1 not defined.");
 }
 
 #[test]
@@ -207,7 +207,7 @@ fn crash_illtyped_step() {
     // Upstream: RuleError: Inputs must match on LHS and RHS of rule (...).
     assert_crash_handled(
         "tests/fixtures/crash/illtyped_step.chyp",
-        8,
+        9,
         "Inputs must match on LHS and RHS of rule ([(None, 1), (None, 1)] != [(None, 1)])",
     );
 }

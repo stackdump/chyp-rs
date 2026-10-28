@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 # ORIGINAL FIXTURE (chyp-rs contributors, 2026; not derived from any Chyp file):
 # long chains and deep nesting, kept below upstream's recursion limit
 # (about 490 levels), including composition errors inside long chains.

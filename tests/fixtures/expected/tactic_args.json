@@ -4,198 +4,198 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 6,
+   "line": 7,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "GenPart",
-   "line": 7,
+   "line": 8,
    "name": "g",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 8,
+   "line": 9,
    "name": "ff",
    "status": "unchecked"
   },
   {
    "kind": "RulePart",
-   "line": 9,
+   "line": 10,
    "name": "fg",
    "status": "unchecked"
   },
   {
    "kind": "RewritePart",
-   "line": 12,
+   "line": 13,
    "name": "comment_first",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 14,
+   "line": 15,
    "name": "comment_unknown",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 15,
+   "line": 16,
    "name": "comment_second",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 17,
+   "line": 18,
    "name": "comment_after",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 18,
+   "line": 19,
    "name": "comment_inside",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 20,
+   "line": 21,
    "name": "spaces",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 21,
+   "line": 22,
    "name": "newlines",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 24,
+   "line": 25,
    "name": "unit_sep",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 25,
+   "line": 26,
    "name": "unit_sep_converse",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 26,
+   "line": 27,
    "name": "vertical_tab",
    "status": "valid"
   },
   {
    "kind": "RewritePart",
-   "line": 27,
+   "line": 28,
    "name": "no_args",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 28,
+   "line": 29,
    "name": "empty_unknown",
    "status": "invalid"
   },
   {
    "kind": "RewritePart",
-   "line": 29,
+   "line": 30,
    "name": "two_args",
    "status": "valid"
   },
   {
    "kind": "TheoremPart",
-   "line": 31,
+   "line": 32,
    "name": "apply_comment",
    "status": "invalid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 32,
+   "line": 33,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ApplyTacticPart",
-   "line": 33,
+   "line": 34,
    "name": "",
    "status": "invalid"
   },
   {
    "kind": "ProofQedPart",
-   "line": 35,
+   "line": 36,
    "name": "",
    "status": "invalid"
   },
   {
    "kind": "TheoremPart",
-   "line": 37,
+   "line": 38,
    "name": "apply_comment_comma",
    "status": "invalid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 38,
+   "line": 39,
    "name": "",
    "status": "valid"
   },
   {
    "kind": "ApplyTacticPart",
-   "line": 39,
+   "line": 40,
    "name": "",
    "status": "invalid"
   },
   {
    "kind": "ProofQedPart",
-   "line": 41,
+   "line": 42,
    "name": "",
    "status": "invalid"
   },
   {
    "kind": "TheoremPart",
-   "line": 43,
+   "line": 44,
    "name": "apply_ok",
    "status": "valid"
   },
   {
    "kind": "ProofStartPart",
-   "line": 44,
-   "name": "",
-   "status": "valid"
-  },
-  {
-   "kind": "ApplyTacticPart",
    "line": 45,
    "name": "",
    "status": "valid"
   },
   {
+   "kind": "ApplyTacticPart",
+   "line": 46,
+   "name": "",
+   "status": "valid"
+  },
+  {
    "kind": "ProofQedPart",
-   "line": 47,
+   "line": 48,
    "name": "",
    "status": "valid"
   }
  ],
  "errors": [
   {
-   "line": 12,
+   "line": 13,
    "msg": "Bad rule expression: # note\n    ff"
   },
   {
-   "line": 14,
+   "line": 15,
    "msg": "Unknown tactic: foo"
   },
   {
-   "line": 28,
+   "line": 29,
    "msg": "Unknown tactic: foo"
   },
   {
-   "line": 33,
+   "line": 34,
    "msg": "Bad rule expression: # c\n ff"
   },
   {
-   "line": 39,
+   "line": 40,
    "msg": "Bad rule expression: # x"
   }
  ],

@@ -7,7 +7,7 @@ description = "An unofficial Rust port of part of Chyp (https://github.com/akiss
 publish = false
 
 [lib]
-name = "chyp"
+name = "chyp_rs"
 crate-type = ["cdylib", "rlib"]
 
 [[bin]]

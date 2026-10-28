@@ -4,40 +4,40 @@
  "parts": [
   {
    "kind": "GenPart",
-   "line": 3,
+   "line": 4,
    "name": "f",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 5,
+   "line": 6,
    "name": "x",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 7,
+   "line": 8,
    "name": "y",
    "status": "unchecked"
   },
   {
    "kind": "LetPart",
-   "line": 8,
+   "line": 9,
    "name": "z",
    "status": "unchecked"
   }
  ],
  "errors": [
   {
-   "line": 5,
+   "line": 6,
    "msg": "Undefined term: nope"
   },
   {
-   "line": 7,
+   "line": 8,
    "msg": "Undefined term: nope2"
   },
   {
-   "line": 8,
+   "line": 9,
    "msg": "Undefined term: nope3"
   }
  ],
